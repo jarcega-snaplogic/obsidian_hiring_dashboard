@@ -1,0 +1,2088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnapLogic Hiring Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .dashboard-header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .dashboard-title {
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .dashboard-stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 10px 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .dashboard-controls {
+            padding: 20px 30px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .filter-select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: white;
+            font-size: 14px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            background: #f8f9fa;
+            color: #333;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #3498db;
+            color: white;
+        }
+
+        .pipeline-container {
+            padding: 30px;
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            min-height: 600px;
+        }
+
+        .pipeline-column {
+            flex: 1;
+            min-width: 300px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .column-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .column-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .column-count {
+            background: #3498db;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .candidate-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            cursor: move;
+            transition: all 0.3s ease;
+            border-left: 4px solid #3498db;
+            user-select: none;
+        }
+
+        .candidate-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .candidate-card.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg) scale(1.05);
+            z-index: 1000;
+        }
+
+        .pipeline-column.drag-over {
+            background: #e8f5e8;
+            border: 2px dashed #27ae60;
+        }
+
+        .candidate-list {
+            min-height: 200px;
+            padding: 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .candidate-list:empty::after {
+            content: "Drop candidates here";
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #999;
+            font-style: italic;
+            border: 2px dashed #ddd;
+            border-radius: 5px;
+            min-height: 80px;
+        }
+
+        .candidate-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .candidate-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .candidate-date {
+            font-size: 12px;
+            color: #666;
+            background: #f1f2f6;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .candidate-details {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .detail-tag {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .region-emea { background: #e8f5e8; color: #2e7d32; }
+        .region-apac { background: #fff3e0; color: #f57c00; }
+        .region-americas { background: #fce4ec; color: #c2185b; }
+
+        .candidate-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .action-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary { background: #3498db; color: white; }
+        .btn-success { background: #27ae60; color: white; }
+        .btn-warning { background: #f39c12; color: white; }
+        .btn-danger { background: #e74c3c; color: white; }
+
+        .action-btn:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+
+        .toggle-view-btn {
+            padding: 10px 20px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .list-view {
+            display: none;
+            padding: 30px;
+        }
+
+        .candidate-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .candidate-table th,
+        .candidate-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .candidate-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .candidate-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .folder-connection {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .connect-folder-btn {
+            padding: 10px 15px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .connect-folder-btn:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(39, 174, 96, 0.2);
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(39, 174, 96, 0.3);
+        }
+
+        .status-text {
+            font-size: 14px;
+            color: #27ae60;
+        }
+
+        .refresh-btn, .export-btn, .disconnect-btn {
+            padding: 5px 10px;
+            background: transparent;
+            color: rgba(255,255,255,0.7);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .refresh-btn:hover {
+            background: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+            border-color: #3498db;
+        }
+
+        .export-btn:hover {
+            background: rgba(39, 174, 96, 0.2);
+            color: #27ae60;
+            border-color: #27ae60;
+        }
+
+        .disconnect-btn:hover {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+            border-color: #e74c3c;
+        }
+
+        .refresh-btn:disabled, .export-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .candidate-card.dragging {
+            opacity: 0.5;
+            transform: rotate(2deg);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .pipeline-container {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            .dashboard-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <div class="dashboard-title">🚀 SnapLogic Hiring Dashboard</div>
+            <div class="dashboard-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalCandidates">0</span>
+                    <span class="stat-label">Total Candidates</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="recentInterviews">0</span>
+                    <span class="stat-label">Recent Interviews</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="pendingDecisions">0</span>
+                    <span class="stat-label">Pending Decisions</span>
+                </div>
+            </div>
+            <div class="connection-status" id="headerConnectionStatus" style="display: none;">
+                <div style="text-align: right; color: white; font-size: 14px;">
+                    <div>🏠 Vault: <span id="headerVaultName">Not connected</span></div>
+                    <div>📁 Folder: <span id="headerFolderName">Not connected</span></div>
+                    <button onclick="disconnectFromFolder()" style="margin-top: 5px; padding: 4px 8px; font-size: 11px; background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; cursor: pointer;">
+                        🔄 Reconnect
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="dashboard-controls">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Search candidates by name, skills, or location..." id="searchInput">
+            </div>
+            
+            <div class="filter-group">
+                <select class="filter-select" id="regionFilter">
+                    <option value="">All Regions</option>
+                    <option value="EMEA">EMEA</option>
+                    <option value="APAC">APAC</option>
+                    <option value="AMERICAS">Americas</option>
+                </select>
+                
+                <select class="filter-select" id="positionFilter">
+                    <option value="">All Positions</option>
+                    <!-- Options will be populated dynamically based on actual data -->
+                </select>
+                
+                <select class="filter-select" id="statusFilter">
+                    <option value="">All Status</option>
+                    <option value="Recent Interview - Pending">Recent Pending</option>
+                    <option value="Offer Stage">Offer Stage</option>
+                    <option value="Hired">Hired</option>
+                    <option value="Not Hired - Negative">Not Hired - Negative</option>
+                    <option value="Not Hired - Previous Cycle">Previous Cycle</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <button class="filter-btn" onclick="showQuickFilter('emea-recent')">EMEA Recent</button>
+                <button class="filter-btn" onclick="showQuickFilter('high-priority')">High Priority</button>
+                <button class="filter-btn" onclick="showQuickFilter('this-week')">This Week</button>
+            </div>
+
+            <button class="toggle-view-btn" onclick="toggleView()">📊 Toggle View</button>
+            <button class="toggle-view-btn" onclick="refreshDataFromFiles()" id="refreshDataBtn">🔄 Refresh Data</button>
+        </div>
+
+        <!-- Pipeline View -->
+        <div class="pipeline-container" id="pipelineView">
+            <div class="pipeline-column">
+                <div class="column-header">
+                    <span class="column-title">🔥 Recent Interviews</span>
+                    <span class="column-count" id="recentCount">0</span>
+                </div>
+                <div class="candidate-list" id="recentList">
+                    <!-- Recent candidates will be populated here -->
+                </div>
+            </div>
+
+            <div class="pipeline-column">
+                <div class="column-header">
+                    <span class="column-title">💼 Offer Stage</span>
+                    <span class="column-count" id="offerCount">0</span>
+                </div>
+                <div class="candidate-list" id="offerList">
+                    <!-- Offer stage candidates -->
+                </div>
+            </div>
+
+            <div class="pipeline-column">
+                <div class="column-header">
+                    <span class="column-title">✅ Hired</span>
+                    <span class="column-count" id="hiredCount">0</span>
+                </div>
+                <div class="candidate-list" id="hiredList">
+                    <!-- Hired candidates -->
+                </div>
+            </div>
+
+            <div class="pipeline-column">
+                <div class="column-header">
+                    <span class="column-title">❌ Not Hired - Negative</span>
+                    <span class="column-count" id="notHiredNegativeCount">0</span>
+                </div>
+                <div class="candidate-list" id="notHiredNegativeList">
+                    <!-- Not hired negative candidates -->
+                </div>
+            </div>
+
+            <div class="pipeline-column">
+                <div class="column-header">
+                    <span class="column-title">⏸️ Not Hired - Previous</span>
+                    <span class="column-count" id="notHiredCount">0</span>
+                </div>
+                <div class="candidate-list" id="notHiredList">
+                    <!-- Not hired previous cycle candidates -->
+                </div>
+            </div>
+        </div>
+
+        <!-- List View -->
+        <div class="list-view" id="listView">
+            <h3 style="margin-bottom: 20px;">📋 Candidates List View</h3>
+            <table class="candidate-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Region</th>
+                        <th>Date</th>
+                        <th>Rating</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="candidateTableBody">
+                    <!-- Table rows will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Candidate Details Modal -->
+    <div class="modal" id="candidateModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalCandidateName">Candidate Details</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="modalContent">
+                <!-- Candidate details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // File System Access API support detection
+        const isFileSystemAccessSupported = 'showDirectoryPicker' in window;
+        let vaultDirectoryHandle = null;
+        let hiringDirectoryHandle = null;
+        let vaultName = null;
+        let hiringFolderPath = null;
+        let isConnectedToVault = false;
+        let isConnectedToFolder = false;
+
+        // Initialize with empty data - will be populated when folder is connected
+        let candidateData = {
+            candidates: [],
+            stats: { total_candidates: 0, recent_interviews: 0, pending_decisions: 0 },
+            metadata: { generated_at: new Date().toISOString(), source: 'Not connected' }
+        };
+        let allCandidates = [];
+        let filteredCandidates = [];
+        let currentView = 'pipeline';
+
+        // No embedded data - everything loads from connected folder
+
+        // Show connection prompt and disable dashboard
+        function showConnectionPrompt() {
+            const pipelineView = document.getElementById('pipelineView');
+            const listView = document.getElementById('listView');
+            
+            // Hide normal dashboard content
+            pipelineView.style.display = 'none';
+            listView.style.display = 'none';
+            
+            // Create connection prompt
+            const promptDiv = document.createElement('div');
+            promptDiv.id = 'connectionPrompt';
+            promptDiv.style.cssText = `
+                padding: 60px 40px;
+                text-align: center;
+                background: #f8f9fa;
+                margin: 40px;
+                border-radius: 15px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            `;
+            
+            promptDiv.innerHTML = `
+                <div style="max-width: 700px; margin: 0 auto;">
+                    <h2 style="color: #2c3e50; margin-bottom: 20px;">🚀 Welcome to SnapLogic Hiring Dashboard</h2>
+                    <p style="color: #666; font-size: 18px; margin-bottom: 30px; line-height: 1.6;">
+                        This dashboard loads candidate data directly from your Obsidian vault. 
+                        Follow the two-step setup to get started with seamless candidate management.
+                    </p>
+                    <div style="background: white; padding: 30px; border-radius: 10px; margin-bottom: 30px;">
+                        <h3 style="color: #3498db; margin-bottom: 15px;">🌟 Features</h3>
+                        <ul style="text-align: left; color: #666; max-width: 400px; margin: 0 auto;">
+                            <li style="margin-bottom: 10px;">📋 Live data from your Markdown files</li>
+                            <li style="margin-bottom: 10px;">🖱️ Drag & drop to update candidate status</li>
+                            <li style="margin-bottom: 10px;">🔄 Auto-sync with file changes</li>
+                            <li style="margin-bottom: 10px;">🔗 One-click open in Obsidian</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Connection Steps -->
+                    <div style="background: white; padding: 25px; border-radius: 10px; margin-bottom: 30px;">
+                        <h3 style="color: #2c3e50; margin-bottom: 20px;">📋 Quick Setup</h3>
+                        
+                        <!-- Step 1: Vault Selection -->
+                        <div id="step1" style="margin-bottom: 20px; padding: 15px; border-radius: 8px; border: 2px solid #3498db;">
+                            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                <span style="background: #3498db; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; margin-right: 10px;">1</span>
+                                <h4 style="color: #3498db; margin: 0;">Select Your Obsidian Vault</h4>
+                            </div>
+                            <p style="color: #666; margin-bottom: 15px; text-align: left;">Choose your Obsidian vault folder (must contain .obsidian folder)</p>
+                            <button id="connectVaultBtn" onclick="connectToObsidianVault()" style="
+                                padding: 12px 24px;
+                                background: linear-gradient(135deg, #3498db, #2980b9);
+                                color: white;
+                                border: none;
+                                border-radius: 6px;
+                                font-size: 14px;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                            " onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='translateY(0)'">
+                                🏠 Select Obsidian Vault
+                            </button>
+                            <div id="vaultStatus" style="margin-top: 10px; font-size: 14px;"></div>
+                        </div>
+                        
+                        <!-- Step 2: Hiring Folder Selection -->
+                        <div id="step2" style="margin-bottom: 20px; padding: 15px; border-radius: 8px; border: 2px solid #ddd; opacity: 0.5;">
+                            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                <span style="background: #ddd; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; margin-right: 10px;">2</span>
+                                <h4 style="color: #999; margin: 0;">Select Your Hiring Folder</h4>
+                            </div>
+                            <p style="color: #999; margin-bottom: 15px; text-align: left;">Choose the folder containing your candidate markdown files</p>
+                            <button id="connectFolderBtn" onclick="connectToHiringFolder()" disabled style="
+                                padding: 12px 24px;
+                                background: #ddd;
+                                color: white;
+                                border: none;
+                                border-radius: 6px;
+                                font-size: 14px;
+                                font-weight: 600;
+                                cursor: not-allowed;
+                            ">
+                                📁 Select Hiring Folder
+                            </button>
+                            <div id="folderStatus" style="margin-top: 10px; font-size: 14px;"></div>
+                        </div>
+                    </div>
+                    
+                    <p style="color: #999; font-size: 14px; margin-top: 20px;">
+                        ${isFileSystemAccessSupported ? 
+                            'Both folders must be selected to start using the dashboard' : 
+                            '⚠️ This feature requires Chrome or Edge browser'}
+                    </p>
+                </div>
+            `;
+            
+            // Insert after dashboard controls
+            const controls = document.querySelector('.dashboard-controls');
+            controls.after(promptDiv);
+        }
+        
+        function hideConnectionPrompt() {
+            const prompt = document.getElementById('connectionPrompt');
+            if (prompt) {
+                prompt.remove();
+            }
+            
+            // Show dashboard content
+            document.getElementById('pipelineView').style.display = 'flex';
+        }
+
+        // File System Access API functions - Step 1: Connect to Obsidian Vault
+        async function connectToObsidianVault() {
+            if (!isFileSystemAccessSupported) {
+                alert('Your browser does not support the File System Access API. Please use Chrome or Edge for automatic file updates.');
+                return;
+            }
+
+            try {
+                // Step 1: Select vault directory
+                vaultDirectoryHandle = await window.showDirectoryPicker({
+                    id: 'obsidian-vault',
+                    mode: 'readwrite',
+                    startIn: 'documents'
+                });
+                
+                // Validate .obsidian folder exists
+                try {
+                    await vaultDirectoryHandle.getDirectoryHandle('.obsidian');
+                    vaultName = vaultDirectoryHandle.name;
+                    isConnectedToVault = true;
+                    
+                    console.log(`Connected to Obsidian vault: ${vaultName}`);
+                    updateVaultStatus(`✅ Connected to "${vaultName}" vault`, true);
+                    enableStep2();
+                    
+                } catch (obsidianError) {
+                    showNotification('❌ Selected folder is not a valid Obsidian vault (.obsidian folder not found)', 'error');
+                    updateVaultStatus('❌ Not a valid Obsidian vault', false);
+                    vaultDirectoryHandle = null;
+                    vaultName = null;
+                    isConnectedToVault = false;
+                }
+                
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    console.error('Error connecting to vault:', error);
+                    showNotification('❌ Failed to connect to Obsidian vault. Please try again.', 'error');
+                    updateVaultStatus('❌ Connection failed', false);
+                }
+            }
+        }
+
+        // Step 2: Connect to Hiring Folder within vault
+        async function connectToHiringFolder() {
+            if (!isConnectedToVault || !vaultDirectoryHandle) {
+                showNotification('❌ Please connect to Obsidian vault first.', 'error');
+                return;
+            }
+
+            try {
+                // Step 2: Select hiring folder (can be anywhere)
+                hiringDirectoryHandle = await window.showDirectoryPicker({
+                    id: 'hiring-folder',
+                    mode: 'readwrite',
+                    startIn: 'documents'
+                });
+                
+                // Calculate relative path from vault to hiring folder
+                try {
+                    const relativePath = await vaultDirectoryHandle.resolve(hiringDirectoryHandle);
+                    if (relativePath) {
+                        hiringFolderPath = relativePath.join('/');
+                        isConnectedToFolder = true;
+                        
+                        console.log(`Connected to hiring folder: ${hiringFolderPath}`);
+                        updateFolderStatus(`✅ Connected to "${hiringFolderPath}" folder`, true);
+                        
+                        // Both steps complete - initialize dashboard
+                        hideConnectionPrompt();
+                        updateHeaderConnectionStatus();
+                        showNotification(`🎉 Connected to vault "${vaultName}" and folder "${hiringFolderPath}"! Loading candidate data...`, 'success');
+                        
+                        setTimeout(() => {
+                            loadOrCreateCandidatesData();
+                        }, 500);
+                        
+                    } else {
+                        // Hiring folder is outside the vault - that's OK, just use folder name
+                        hiringFolderPath = hiringDirectoryHandle.name;
+                        isConnectedToFolder = true;
+                        
+                        console.log(`Connected to hiring folder (outside vault): ${hiringFolderPath}`);
+                        updateFolderStatus(`✅ Connected to "${hiringFolderPath}" folder (outside vault)`, true);
+                        
+                        hideConnectionPrompt();
+                        updateHeaderConnectionStatus();
+                        showNotification(`🎉 Connected to vault "${vaultName}" and external folder "${hiringFolderPath}"! Loading candidate data...`, 'success');
+                        
+                        setTimeout(() => {
+                            loadOrCreateCandidatesData();
+                        }, 500);
+                    }
+                } catch (resolveError) {
+                    // If resolve fails, folder is outside vault - still OK
+                    hiringFolderPath = hiringDirectoryHandle.name;
+                    isConnectedToFolder = true;
+                    
+                    console.log(`Connected to hiring folder (external): ${hiringFolderPath}`);
+                    updateFolderStatus(`✅ Connected to "${hiringFolderPath}" folder`, true);
+                    
+                    hideConnectionPrompt();
+                    updateHeaderConnectionStatus();
+                    showNotification(`🎉 Connected to vault "${vaultName}" and folder "${hiringFolderPath}"! Loading candidate data...`, 'success');
+                    
+                    setTimeout(() => {
+                        loadOrCreateCandidatesData();
+                    }, 500);
+                }
+                
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    console.error('Error connecting to hiring folder:', error);
+                    showNotification('❌ Failed to connect to hiring folder. Please try again.', 'error');
+                    updateFolderStatus('❌ Connection failed', false);
+                }
+            }
+        }
+
+        // UI Helper Functions
+        function updateVaultStatus(message, success) {
+            const vaultStatus = document.getElementById('vaultStatus');
+            if (vaultStatus) {
+                vaultStatus.innerHTML = message;
+                vaultStatus.style.color = success ? '#27ae60' : '#e74c3c';
+            }
+        }
+
+        function updateFolderStatus(message, success) {
+            const folderStatus = document.getElementById('folderStatus');
+            if (folderStatus) {
+                folderStatus.innerHTML = message;
+                folderStatus.style.color = success ? '#27ae60' : '#e74c3c';
+            }
+        }
+
+        function enableStep2() {
+            console.log('Enabling Step 2...');
+            
+            // Use setTimeout to ensure DOM is ready
+            setTimeout(() => {
+                const step2 = document.getElementById('step2');
+                const connectFolderBtn = document.getElementById('connectFolderBtn');
+                
+                console.log('Step2 element:', step2);
+                console.log('ConnectFolderBtn element:', connectFolderBtn);
+                
+                if (step2 && connectFolderBtn) {
+                    console.log('Elements found, enabling Step 2');
+                    
+                    // Enable step 2 visually
+                    step2.style.opacity = '1';
+                    step2.style.border = '2px solid #27ae60';
+                    
+                    // Update step number color
+                    const stepNumber = step2.querySelector('span');
+                    if (stepNumber) {
+                        stepNumber.style.background = '#27ae60';
+                    }
+                    
+                    // Update title color
+                    const stepTitle = step2.querySelector('h4');
+                    if (stepTitle) {
+                        stepTitle.style.color = '#27ae60';
+                    }
+                    
+                    // Update description color
+                    const stepDesc = step2.querySelector('p');
+                    if (stepDesc) {
+                        stepDesc.style.color = '#666';
+                    }
+                    
+                    // Enable button - remove disabled attribute and update styles
+                    connectFolderBtn.removeAttribute('disabled');
+                    connectFolderBtn.style.setProperty('background', 'linear-gradient(135deg, #27ae60, #229954)', 'important');
+                    connectFolderBtn.style.setProperty('cursor', 'pointer', 'important');
+                    connectFolderBtn.style.setProperty('color', 'white', 'important');
+                    connectFolderBtn.style.setProperty('opacity', '1', 'important');
+                    
+                    console.log('Step 2 enabled successfully');
+                    console.log('Button disabled attribute:', connectFolderBtn.disabled);
+                    console.log('Button styles:', connectFolderBtn.style.cssText);
+                } else {
+                    console.error('Could not find Step 2 elements');
+                    if (!step2) console.error('step2 element not found');
+                    if (!connectFolderBtn) console.error('connectFolderBtn element not found');
+                    
+                    // Try again after a longer delay
+                    setTimeout(() => enableStep2(), 500);
+                }
+            }, 100);
+        }
+        
+        // Debug function to manually enable Step 2 (can be called from browser console)
+        window.debugEnableStep2 = function() {
+            console.log('Debug: Manually enabling Step 2');
+            enableStep2();
+        };
+
+        // Update header connection status
+        function updateHeaderConnectionStatus() {
+            const headerStatus = document.getElementById('headerConnectionStatus');
+            const vaultNameSpan = document.getElementById('headerVaultName');
+            const folderNameSpan = document.getElementById('headerFolderName');
+            
+            if (headerStatus && vaultNameSpan && folderNameSpan) {
+                if (isConnectedToVault && isConnectedToFolder) {
+                    headerStatus.style.display = 'block';
+                    vaultNameSpan.textContent = vaultName || 'Unknown';
+                    folderNameSpan.textContent = hiringFolderPath || 'Unknown';
+                } else {
+                    headerStatus.style.display = 'none';
+                }
+            }
+        }
+
+        function disconnectFromFolder() {
+            vaultDirectoryHandle = null;
+            hiringDirectoryHandle = null;
+            vaultName = null;
+            hiringFolderPath = null;
+            isConnectedToVault = false;
+            isConnectedToFolder = false;
+            updateHeaderConnectionStatus();
+            console.log('Disconnected from vault and folder');
+            showNotification('📁 Disconnected. Please restart the connection process.', 'info');
+            
+            // Show connection prompt again
+            showConnectionPrompt();
+        }
+
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            const colors = {
+                success: '#27ae60',
+                error: '#e74c3c',
+                info: '#3498db',
+                warning: '#f39c12'
+            };
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 80px;
+                right: 20px;
+                background: ${colors[type]};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                z-index: 10000;
+                max-width: 400px;
+                font-size: 14px;
+            `;
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (document.body.contains(notification)) {
+                    document.body.removeChild(notification);
+                }
+            }, 5000);
+        }
+
+        // Dynamic file scanning functions
+        async function scanAllCandidateFiles() {
+            if (!isConnectedToFolder || !hiringDirectoryHandle) {
+                showNotification('❌ Please connect to hiring folder first to scan files.', 'error');
+                return null;
+            }
+
+            try {
+                showNotification('🔄 Scanning candidate files...', 'info');
+                const candidates = [];
+                let fileCount = 0;
+                let processedCount = 0;
+
+                // First pass: count total files
+                for await (const [name, handle] of hiringDirectoryHandle.entries()) {
+                    if (name.endsWith('.md') && !name.startsWith('0 - ') && !name.includes('Hiring') && !name.includes('SKO')) {
+                        fileCount++;
+                    }
+                }
+
+                // Second pass: process files
+                for await (const [name, handle] of hiringDirectoryHandle.entries()) {
+                    if (name.endsWith('.md') && !name.startsWith('0 - ') && !name.includes('Hiring') && !name.includes('SKO')) {
+                        try {
+                            const candidate = await parseMarkdownFile(name, handle);
+                            if (candidate) {
+                                candidates.push(candidate);
+                            }
+                            processedCount++;
+                            
+                            // Update progress
+                            if (processedCount % 10 === 0 || processedCount === fileCount) {
+                                showNotification(`📋 Processed ${processedCount}/${fileCount} candidate files...`, 'info');
+                            }
+                        } catch (error) {
+                            console.error(`Error processing ${name}:`, error);
+                        }
+                    }
+                }
+
+                // Generate statistics
+                const stats = {
+                    total_candidates: candidates.length,
+                    recent_interviews: candidates.filter(c => c.status && c.status.includes('Recent Interview')).length,
+                    pending_decisions: candidates.filter(c => c.status && c.status.includes('Pending')).length,
+                    hired: candidates.filter(c => c.status === 'Hired').length,
+                    offer_stage: candidates.filter(c => c.status === 'Offer Stage').length,
+                    not_hired_negative: candidates.filter(c => c.status === 'Not Hired - Negative').length,
+                    not_hired_previous: candidates.filter(c => c.status === 'Not Hired - Previous Cycle').length,
+                    generation_date: new Date().toISOString()
+                };
+
+                const candidateData = {
+                    candidates: candidates,
+                    stats: stats,
+                    metadata: {
+                        generated_at: new Date().toISOString(),
+                        total_files_processed: fileCount,
+                        source_directory: 'File System Access API'
+                    }
+                };
+
+                showNotification(`✅ Successfully scanned ${fileCount} files and found ${candidates.length} candidates!`, 'success');
+                return candidateData;
+
+            } catch (error) {
+                console.error('Error scanning candidate files:', error);
+                showNotification(`❌ Error scanning files: ${error.message}`, 'error');
+                return null;
+            }
+        }
+
+        async function parseMarkdownFile(fileName, fileHandle) {
+            try {
+                const file = await fileHandle.getFile();
+                const content = await file.text();
+                
+                // Extract candidate name from filename
+                const name = fileName.replace('.md', '');
+                
+                // Skip template and utility files
+                if (name.startsWith('0 - ') || name.includes('Hiring') || name.includes('SKO') || name.includes('Untitled')) {
+                    return null;
+                }
+
+                const candidate = { name: name };
+
+                // Extract structured metadata using regex
+                const statusMatch = content.match(/\*\*Status:\*\*\s*(.+)/i);
+                candidate.status = statusMatch ? statusMatch[1].trim() : 'Unknown';
+
+                const dateMatch = content.match(/\*\*Date:\*\*\s*(.+)/i);
+                candidate.date = dateMatch ? dateMatch[1].trim() : 'Date not found';
+
+                const positionMatch = content.match(/\*\*Position:\*\*\s*(.+)/i);
+                candidate.position = positionMatch ? positionMatch[1].trim() : 'Sales Engineer';
+
+                const regionMatch = content.match(/\*\*Region:\*\*\s*(.+)/i);
+                candidate.region = regionMatch ? regionMatch[1].trim() : 'UNKNOWN';
+
+                const ratingMatch = content.match(/\*\*Overall Rating:\*\*\s*(.+)/i);
+                candidate.rating = ratingMatch ? ratingMatch[1].trim() : 'TBD';
+
+                // Extract location from Localisation section
+                const locationMatch = content.match(/\*\*Localisation\*\*\s*\n\s*(.+)/i) || 
+                                     content.match(/\*\*Location:\*\*\s*(.+)/i);
+                candidate.location = locationMatch ? locationMatch[1].trim() : 'Unknown';
+
+                // Extract LinkedIn profile
+                const linkedinMatch = content.match(/\*\*Linkedin\*\*\s*\n\s*(.+)/i) ||
+                                     content.match(/\*\*LinkedIn:\*\*\s*(.+)/i) ||
+                                     content.match(/linkedin\.com\/in\/([^\s\)]+)/i) ||
+                                     content.match(/https?:\/\/[a-z]*\.?linkedin\.com\/[^\s]+/i);
+                candidate.linkedin = linkedinMatch ? linkedinMatch[1].trim() : '';
+
+                // Extract email
+                const emailMatch = content.match(/\*\*Email:\*\*\s*(.+)/i) ||
+                                  content.match(/\*\*E-mail:\*\*\s*(.+)/i) ||
+                                  content.match(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/);
+                candidate.email = emailMatch ? emailMatch[1].trim() : '';
+
+                // Extract phone number
+                const phoneMatch = content.match(/\*\*Phone:\*\*\s*(.+)/i) ||
+                                  content.match(/\*\*Mobile:\*\*\s*(.+)/i) ||
+                                  content.match(/\*\*Tel:\*\*\s*(.+)/i) ||
+                                  content.match(/(\+?[\d\s\-\(\)]{8,20})/);
+                candidate.phone = phoneMatch ? phoneMatch[1].trim() : '';
+
+                // Extract experience/previous company info for backward compatibility
+                const introSection = content.match(/\*\*Intro notes\*\*\s*\n(.*?)(?=\*\*|$)/is);
+                let experience = candidate.position || 'Sales Engineer';
+                if (introSection) {
+                    const introText = introSection[1].trim();
+                    // Look for company mentions
+                    const companyPattern = /(?:at|with|from)\s+([A-Z][a-zA-Z\s&]+?)(?:\s|,|\.|\n|$)/g;
+                    const companyMatches = [...introText.matchAll(companyPattern)];
+                    if (companyMatches.length > 0) {
+                        experience = companyMatches.slice(0, 2).map(match => match[1].trim()).join(', ');
+                    }
+                }
+                candidate.experience = experience;
+
+                // Extract and clean notes
+                const notes = [];
+                if (introSection) {
+                    const introText = introSection[1].trim();
+                    if (introText) {
+                        const cleaned = introText.replace(/\s+/g, ' ').substring(0, 100);
+                        notes.push(cleaned + (introText.length > 100 ? '...' : ''));
+                    }
+                }
+
+                const qualitiesSection = content.match(/\*\*Qualities\?\*\*\s*\n(.*?)(?=\*\*|$)/is);
+                if (qualitiesSection) {
+                    const qualitiesText = qualitiesSection[1].trim();
+                    if (qualitiesText) {
+                        notes.push(`Qualities: ${qualitiesText.substring(0, 80)}...`);
+                    }
+                }
+
+                candidate.notes = notes.length > 0 ? notes.join(' | ') : 'No additional notes';
+
+                // Extract tags
+                const tagsMatch = content.match(/Tags:\s*(.+)/);
+                if (tagsMatch) {
+                    candidate.tags = tagsMatch[1].split('#').map(tag => tag.trim()).filter(tag => tag);
+                } else {
+                    candidate.tags = [];
+                }
+
+                return candidate;
+
+            } catch (error) {
+                console.error(`Error parsing ${fileName}:`, error);
+                return null;
+            }
+        }
+
+        // Refresh data from files
+        async function refreshDataFromFiles() {
+            const refreshBtn = document.getElementById('refreshDataBtn');
+            
+            // Disable button during refresh
+            if (refreshBtn) {
+                refreshBtn.disabled = true;
+                refreshBtn.textContent = '⏳ Refreshing...';
+            }
+
+            try {
+                const newCandidateData = await scanAllCandidateFiles();
+                
+                if (newCandidateData) {
+                    // Check for conflicts between current dashboard data and file data
+                    const conflicts = detectDataConflicts(allCandidates, newCandidateData.candidates);
+                    
+                    if (conflicts.length > 0) {
+                        const conflictMessage = `⚠️ Found ${conflicts.length} candidates with status differences between dashboard and files. Dashboard data updated from files.`;
+                        console.log('Conflicts detected:', conflicts);
+                        showNotification(conflictMessage, 'warning');
+                    }
+                    
+                    // Update global data
+                    candidateData = newCandidateData;
+                    allCandidates = candidateData.candidates;
+                    filteredCandidates = [...allCandidates];
+                    
+                    // Save updated data to candidates.json
+                    await saveCandidatesJson(newCandidateData);
+                    
+                    // Refresh the dashboard
+                    renderPipelineView();
+                    renderListView();
+                    updateStats();
+                    populatePositionFilter();
+                    
+                    showNotification(`🎉 Dashboard refreshed with ${allCandidates.length} candidates and saved to candidates.json!`, 'success');
+                } else {
+                    showNotification('❌ Failed to refresh data from files.', 'error');
+                }
+            } catch (error) {
+                console.error('Error refreshing data:', error);
+                showNotification(`❌ Error refreshing data: ${error.message}`, 'error');
+            } finally {
+                // Re-enable button
+                if (refreshBtn) {
+                    refreshBtn.disabled = false;
+                    refreshBtn.textContent = '🔄 Refresh Data';
+                }
+            }
+        }
+
+        // Detect conflicts between dashboard data and file data
+        function detectDataConflicts(currentCandidates, fileCandidates) {
+            const conflicts = [];
+            
+            currentCandidates.forEach(currentCandidate => {
+                const fileCandidate = fileCandidates.find(fc => fc.name === currentCandidate.name);
+                if (fileCandidate && fileCandidate.status !== currentCandidate.status) {
+                    conflicts.push({
+                        name: currentCandidate.name,
+                        dashboardStatus: currentCandidate.status,
+                        fileStatus: fileCandidate.status
+                    });
+                }
+            });
+            
+            return conflicts;
+        }
+
+        // Load or create candidates.json
+        async function loadOrCreateCandidatesData() {
+            if (!isConnectedToFolder || !hiringDirectoryHandle) {
+                showNotification('❌ Please connect to hiring folder first.', 'error');
+                return;
+            }
+
+            try {
+                // First, try to load existing candidates.json
+                try {
+                    const fileHandle = await hiringDirectoryHandle.getFileHandle('candidates.json');
+                    const file = await fileHandle.getFile();
+                    const existingData = JSON.parse(await file.text());
+                    
+                    // Load existing data
+                    candidateData = existingData;
+                    allCandidates = candidateData.candidates;
+                    filteredCandidates = [...allCandidates];
+                    
+                    renderPipelineView();
+                    renderListView();
+                    updateStats();
+                    populatePositionFilter();
+                    
+                    showNotification(`📋 Loaded ${allCandidates.length} candidates from existing candidates.json!`, 'success');
+                    
+                } catch (fileError) {
+                    // candidates.json doesn't exist, create it from MD files
+                    showNotification('📄 candidates.json not found. Creating from MD files...', 'info');
+                    
+                    const newData = await scanAllCandidateFiles();
+                    if (newData) {
+                        // Save the new data to candidates.json
+                        await saveCandidatesJson(newData);
+                        
+                        // Load the new data
+                        candidateData = newData;
+                        allCandidates = candidateData.candidates;
+                        filteredCandidates = [...allCandidates];
+                        
+                        renderPipelineView();
+                        renderListView();
+                        updateStats();
+                        populatePositionFilter();
+                        
+                        showNotification(`✅ Created candidates.json with ${allCandidates.length} candidates!`, 'success');
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading/creating candidates data:', error);
+                showNotification(`❌ Error loading data: ${error.message}`, 'error');
+            }
+        }
+
+        // Save candidates data to JSON file
+        async function saveCandidatesJson(data) {
+            try {
+                const fileHandle = await hiringDirectoryHandle.getFileHandle('candidates.json', { create: true });
+                const writable = await fileHandle.createWritable();
+                await writable.write(JSON.stringify(data, null, 2));
+                await writable.close();
+                return true;
+            } catch (error) {
+                console.error('Error saving candidates.json:', error);
+                return false;
+            }
+        }
+
+        // Auto-save candidates.json with current data
+        async function autoSaveCandidatesJson() {
+            if (!isConnectedToFolder || !hiringDirectoryHandle) {
+                return;
+            }
+
+            try {
+                // Update stats
+                const stats = {
+                    total_candidates: allCandidates.length,
+                    recent_interviews: allCandidates.filter(c => c.status && c.status.includes('Recent Interview')).length,
+                    pending_decisions: allCandidates.filter(c => c.status && c.status.includes('Pending')).length,
+                    hired: allCandidates.filter(c => c.status === 'Hired').length,
+                    offer_stage: allCandidates.filter(c => c.status === 'Offer Stage').length,
+                    not_hired_negative: allCandidates.filter(c => c.status === 'Not Hired - Negative').length,
+                    not_hired_previous: allCandidates.filter(c => c.status === 'Not Hired - Previous Cycle').length,
+                    generation_date: new Date().toISOString()
+                };
+
+                const updatedData = {
+                    candidates: allCandidates,
+                    stats: stats,
+                    metadata: {
+                        generated_at: new Date().toISOString(),
+                        total_files_processed: allCandidates.length,
+                        source_directory: 'File System Access API'
+                    }
+                };
+
+                await saveCandidatesJson(updatedData);
+                console.log('Auto-saved candidates.json');
+            } catch (error) {
+                console.error('Error auto-saving candidates.json:', error);
+            }
+        }
+
+        // Initialize dashboard
+        function initializeDashboard() {
+            console.log('Initializing dashboard - waiting for folder connection');
+            
+            // Show connection prompt since we start with no data
+            showConnectionPrompt();
+            
+            // Set up empty dashboard
+            updateStats();
+            setupEventListeners();
+            
+            // Check File System Access API support
+            if (!isFileSystemAccessSupported) {
+                showNotification('⚠️ Your browser doesn\'t support the File System Access API. Please use Chrome or Edge.', 'warning');
+            }
+        }
+
+        // Render pipeline view
+        function renderPipelineView() {
+            const recentList = document.getElementById('recentList');
+            const offerList = document.getElementById('offerList');
+            const hiredList = document.getElementById('hiredList');
+            const notHiredNegativeList = document.getElementById('notHiredNegativeList');
+            const notHiredList = document.getElementById('notHiredList');
+
+            // Clear existing content and setup drop zones
+            [recentList, offerList, hiredList, notHiredNegativeList, notHiredList].forEach(list => {
+                list.innerHTML = '';
+                // Set up drop zone on the entire column instead of just the candidate list
+                const column = list.closest('.pipeline-column');
+                if (column) {
+                    setupDropZone(column);
+                }
+            });
+
+            filteredCandidates.forEach(candidate => {
+                const candidateCard = createCandidateCard(candidate);
+                
+                if (candidate.status === 'Recent Interview - Pending') {
+                    recentList.appendChild(candidateCard);
+                } else if (candidate.status === 'Offer Stage') {
+                    offerList.appendChild(candidateCard);
+                } else if (candidate.status === 'Hired') {
+                    hiredList.appendChild(candidateCard);
+                } else if (candidate.status === 'Not Hired - Negative') {
+                    notHiredNegativeList.appendChild(candidateCard);
+                } else if (candidate.status === 'Not Hired - Previous Cycle' || candidate.status === 'Unknown') {
+                    notHiredList.appendChild(candidateCard);
+                }
+            });
+
+            updateColumnCounts();
+        }
+
+        // Create candidate card
+        function createCandidateCard(candidate) {
+            const card = document.createElement('div');
+            card.className = 'candidate-card';
+            card.draggable = true;
+            card.dataset.candidateName = candidate.name;
+            card.onclick = (e) => {
+                if (!e.target.closest('.action-btn')) {
+                    openCandidateModal(candidate);
+                }
+            };
+
+            // Add drag event listeners
+            card.addEventListener('dragstart', handleDragStart);
+            card.addEventListener('dragend', handleDragEnd);
+
+            const regionClass = candidate.region ? candidate.region.toLowerCase().replace(' ', '-') : 'unknown';
+            
+            card.innerHTML = `
+                <div class="candidate-header">
+                    <div>
+                        <div class="candidate-name">${candidate.name}</div>
+                        <div class="candidate-date">${candidate.date}</div>
+                    </div>
+                </div>
+                <div class="candidate-details">
+                    <span class="detail-tag region-${regionClass}">${candidate.region}</span>
+                    <span class="detail-tag">${candidate.rating}</span>
+                    <span class="detail-tag">${candidate.location}</span>
+                </div>
+                <div class="candidate-actions">
+                    <button class="action-btn btn-primary" onclick="event.stopPropagation(); openInObsidian('${candidate.name}')">📝 Notes</button>
+                    <button class="action-btn btn-success" onclick="event.stopPropagation(); moveToOffer('${candidate.name}')">💼 Offer</button>
+                    <button class="action-btn btn-warning" onclick="event.stopPropagation(); scheduleFollowup('${candidate.name}')">📅 Follow-up</button>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Render list view
+        function renderListView() {
+            const tableBody = document.getElementById('candidateTableBody');
+            tableBody.innerHTML = '';
+
+            filteredCandidates.forEach(candidate => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${candidate.name}</strong><br><small>${candidate.location}</small></td>
+                    <td><span class="detail-tag">${candidate.status}</span></td>
+                    <td><span class="detail-tag region-${candidate.region ? candidate.region.toLowerCase() : 'unknown'}">${candidate.region}</span></td>
+                    <td>${candidate.date}</td>
+                    <td>${candidate.rating}</td>
+                    <td>
+                        <button class="action-btn btn-primary" onclick="openInObsidian('${candidate.name}')">📝</button>
+                        <button class="action-btn btn-success" onclick="moveToOffer('${candidate.name}')">💼</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Update column counts
+        function updateColumnCounts() {
+            const counts = {
+                recent: filteredCandidates.filter(c => c.status === 'Recent Interview - Pending').length,
+                offer: filteredCandidates.filter(c => c.status === 'Offer Stage').length,
+                hired: filteredCandidates.filter(c => c.status === 'Hired').length,
+                notHiredNegative: filteredCandidates.filter(c => c.status === 'Not Hired - Negative').length,
+                notHired: filteredCandidates.filter(c => c.status === 'Not Hired - Previous Cycle' || c.status === 'Unknown').length
+            };
+
+            document.getElementById('recentCount').textContent = counts.recent;
+            document.getElementById('offerCount').textContent = counts.offer;
+            document.getElementById('hiredCount').textContent = counts.hired;
+            document.getElementById('notHiredNegativeCount').textContent = counts.notHiredNegative;
+            document.getElementById('notHiredCount').textContent = counts.notHired;
+        }
+
+        // Update dashboard stats
+        function updateStats() {
+            if (candidateData && candidateData.stats) {
+                document.getElementById('totalCandidates').textContent = candidateData.stats.total_candidates;
+                document.getElementById('recentInterviews').textContent = candidateData.stats.recent_interviews;
+                document.getElementById('pendingDecisions').textContent = candidateData.stats.pending_decisions;
+            } else {
+                document.getElementById('totalCandidates').textContent = allCandidates.length;
+                document.getElementById('recentInterviews').textContent = 
+                    allCandidates.filter(c => c.status && c.status.includes('Recent Interview')).length;
+                document.getElementById('pendingDecisions').textContent = 
+                    allCandidates.filter(c => c.status && c.status.includes('Pending')).length;
+            }
+        }
+
+        // Populate position filter with actual data
+        function populatePositionFilter() {
+            const positionFilter = document.getElementById('positionFilter');
+            const currentValue = positionFilter.value; // Preserve current selection
+            
+            // Get unique positions from candidate data
+            const positions = new Set();
+            allCandidates.forEach(candidate => {
+                if (candidate.position && candidate.position.trim() !== '') {
+                    positions.add(candidate.position.trim());
+                }
+            });
+            
+            // Sort positions alphabetically
+            const sortedPositions = Array.from(positions).sort();
+            
+            // Clear existing options except "All Positions"
+            positionFilter.innerHTML = '<option value="">All Positions</option>';
+            
+            // Add dynamic options
+            sortedPositions.forEach(position => {
+                const option = document.createElement('option');
+                option.value = position;
+                option.textContent = position;
+                positionFilter.appendChild(option);
+            });
+            
+            // Restore previous selection if it still exists
+            if (currentValue && sortedPositions.includes(currentValue)) {
+                positionFilter.value = currentValue;
+            }
+            
+            console.log(`Populated position filter with ${sortedPositions.length} positions:`, sortedPositions);
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            document.getElementById('searchInput').addEventListener('input', handleSearch);
+            document.getElementById('regionFilter').addEventListener('change', handleFilter);
+            document.getElementById('positionFilter').addEventListener('change', handleFilter);
+            document.getElementById('statusFilter').addEventListener('change', handleFilter);
+        }
+
+        // Handle search
+        function handleSearch() {
+            applyFilters();
+        }
+
+        // Handle filters
+        function handleFilter() {
+            applyFilters();
+        }
+
+        // Apply all filters
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const regionFilter = document.getElementById('regionFilter').value;
+            const positionFilter = document.getElementById('positionFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+
+            filteredCandidates = allCandidates.filter(candidate => {
+                const matchesSearch = !searchTerm || 
+                    candidate.name.toLowerCase().includes(searchTerm) ||
+                    (candidate.location && candidate.location.toLowerCase().includes(searchTerm)) ||
+                    (candidate.position && candidate.position.toLowerCase().includes(searchTerm)) ||
+                    (candidate.experience && candidate.experience.toLowerCase().includes(searchTerm)) ||
+                    (candidate.email && candidate.email.toLowerCase().includes(searchTerm));
+                
+                const matchesRegion = !regionFilter || candidate.region === regionFilter;
+                const matchesPosition = !positionFilter || candidate.position === positionFilter;
+                const matchesStatus = !statusFilter || candidate.status === statusFilter;
+
+                return matchesSearch && matchesRegion && matchesPosition && matchesStatus;
+            });
+
+            if (currentView === 'pipeline') {
+                renderPipelineView();
+            } else {
+                renderListView();
+            }
+        }
+
+        // Quick filters
+        function showQuickFilter(filterType) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            switch(filterType) {
+                case 'emea-recent':
+                    document.getElementById('regionFilter').value = 'EMEA';
+                    document.getElementById('statusFilter').value = 'Recent Interview - Pending';
+                    applyFilters();
+                    break;
+                case 'high-priority':
+                    filteredCandidates = allCandidates.filter(c => 
+                        c.rating && (c.rating.includes('4') || c.rating.includes('5')));
+                    if (currentView === 'pipeline') {
+                        renderPipelineView();
+                    } else {
+                        renderListView();
+                    }
+                    break;
+                case 'this-week':
+                    const oneWeekAgo = new Date();
+                    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+                    filteredCandidates = allCandidates.filter(c => 
+                        c.date && new Date(c.date) >= oneWeekAgo);
+                    if (currentView === 'pipeline') {
+                        renderPipelineView();
+                    } else {
+                        renderListView();
+                    }
+                    break;
+            }
+        }
+
+        // Toggle between pipeline and list view
+        function toggleView() {
+            currentView = currentView === 'pipeline' ? 'list' : 'pipeline';
+            
+            const pipelineView = document.getElementById('pipelineView');
+            const listView = document.getElementById('listView');
+            
+            if (currentView === 'pipeline') {
+                pipelineView.style.display = 'flex';
+                listView.style.display = 'none';
+            } else {
+                pipelineView.style.display = 'none';
+                listView.style.display = 'block';
+            }
+        }
+
+        // Open candidate modal
+        function openCandidateModal(candidate) {
+            document.getElementById('modalCandidateName').textContent = candidate.name;
+            document.getElementById('modalContent').innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <h4>📋 Interview Details</h4>
+                    <p><strong>Status:</strong> ${candidate.status}</p>
+                    <p><strong>Position:</strong> ${candidate.position || candidate.experience || 'Not specified'}</p>
+                    <p><strong>Region:</strong> ${candidate.region}</p>
+                    <p><strong>Location:</strong> ${candidate.location}</p>
+                    <p><strong>Date:</strong> ${candidate.date}</p>
+                    <p><strong>Rating:</strong> ${candidate.rating}</p>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <h4>📞 Contact Information</h4>
+                    ${candidate.email ? `<p><strong>📧 Email:</strong> <a href="mailto:${candidate.email}">${candidate.email}</a></p>` : ''}
+                    ${candidate.phone ? `<p><strong>📱 Phone:</strong> <a href="tel:${candidate.phone}">${candidate.phone}</a></p>` : ''}
+                    ${candidate.linkedin ? `<p><strong>🔗 LinkedIn:</strong> <a href="${candidate.linkedin.startsWith('http') ? candidate.linkedin : 'https://linkedin.com/in/' + candidate.linkedin}" target="_blank">${candidate.linkedin}</a></p>` : ''}
+                    ${!candidate.email && !candidate.phone && !candidate.linkedin ? '<p style="color: #999; font-style: italic;">No contact information available</p>' : ''}
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <h4>📝 Notes</h4>
+                    <p>${candidate.notes}</p>
+                </div>
+                <div>
+                    <h4>🎯 Actions</h4>
+                    <button class="action-btn btn-primary" onclick="openInObsidian('${candidate.name}')">Open in Obsidian</button>
+                    <button class="action-btn btn-success" onclick="moveToOffer('${candidate.name}')">Move to Offer</button>
+                    <button class="action-btn btn-warning" onclick="scheduleFollowup('${candidate.name}')">Schedule Follow-up</button>
+                </div>
+            `;
+            document.getElementById('candidateModal').style.display = 'block';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('candidateModal').style.display = 'none';
+        }
+
+        // Drag and Drop functionality
+        let draggedElement = null;
+
+        function handleDragStart(e) {
+            draggedElement = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.outerHTML);
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+            draggedElement = null;
+        }
+
+        function setupDropZone(dropZone) {
+            dropZone.addEventListener('dragover', handleDragOver);
+            dropZone.addEventListener('drop', handleDrop);
+            dropZone.addEventListener('dragenter', handleDragEnter);
+            dropZone.addEventListener('dragleave', handleDragLeave);
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            return false;
+        }
+
+        function handleDragEnter(e) {
+            // Since drop zone is now the entire column, 'this' should be the column
+            let column = this;
+            if (!column.classList.contains('pipeline-column')) {
+                column = this.closest('.pipeline-column');
+            }
+            if (column) {
+                column.classList.add('drag-over');
+            }
+        }
+
+        function handleDragLeave(e) {
+            // Since drop zone is now the entire column, 'this' should be the column
+            let column = this;
+            if (!column.classList.contains('pipeline-column')) {
+                column = this.closest('.pipeline-column');
+            }
+            if (column && !column.contains(e.relatedTarget)) {
+                column.classList.remove('drag-over');
+            }
+        }
+
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+
+            // Since drop zone is now the entire column, 'this' should be the column
+            let column = this;
+            if (!column.classList.contains('pipeline-column')) {
+                // Fallback: find the column from the event target
+                column = e.target.closest('.pipeline-column');
+            }
+            
+            if (column) {
+                column.classList.remove('drag-over');
+            }
+
+            if (draggedElement && draggedElement !== this && column) {
+                const candidateName = draggedElement.dataset.candidateName;
+                const newStatus = getStatusFromColumn(column);
+                
+                console.log(`Attempting to move ${candidateName} to ${newStatus}`);
+                
+                // Update candidate status in data
+                updateCandidateStatus(candidateName, newStatus);
+                
+                // Find the correct candidate list container in this column
+                const candidateList = column.querySelector('.candidate-list');
+                if (candidateList) {
+                    // Remove dragged element from its current parent
+                    if (draggedElement.parentNode) {
+                        draggedElement.parentNode.removeChild(draggedElement);
+                    }
+                    // Move the element to new column
+                    candidateList.appendChild(draggedElement);
+                    console.log(`Successfully moved ${candidateName} to ${newStatus}`);
+                } else {
+                    console.error('Could not find candidate list in column');
+                }
+                
+                // Update the dashboard
+                updateColumnCounts();
+                
+                // Update the actual MD file
+                updateCandidateFile(candidateName, newStatus);
+                
+                // Auto-save candidates.json with updated data
+                autoSaveCandidatesJson();
+            }
+
+            return false;
+        }
+
+        function getStatusFromColumn(column) {
+            const columnTitle = column.querySelector('.column-title').textContent;
+            
+            if (columnTitle.includes('Recent Interviews')) {
+                return 'Recent Interview - Pending';
+            } else if (columnTitle.includes('Offer Stage')) {
+                return 'Offer Stage';
+            } else if (columnTitle.includes('Hired') && !columnTitle.includes('Not Hired')) {
+                return 'Hired';
+            } else if (columnTitle.includes('Not Hired - Negative')) {
+                return 'Not Hired - Negative';
+            } else if (columnTitle.includes('Not Hired - Previous')) {
+                return 'Not Hired - Previous Cycle';
+            }
+            
+            return 'Unknown';
+        }
+
+        function updateCandidateStatus(candidateName, newStatus) {
+            // Update in allCandidates array
+            const candidate = allCandidates.find(c => c.name === candidateName);
+            if (candidate) {
+                candidate.status = newStatus;
+            }
+            
+            // Update in filteredCandidates array
+            const filteredCandidate = filteredCandidates.find(c => c.name === candidateName);
+            if (filteredCandidate) {
+                filteredCandidate.status = newStatus;
+            }
+        }
+
+        // File System Access API - Direct file modification
+        async function updateCandidateFile(candidateName, newStatus) {
+            if (!isConnectedToFolder || !hiringDirectoryHandle) {
+                showNotification(`📋 ${candidateName} moved to "${newStatus}" in dashboard. Connect to hiring folder to update MD files automatically.`, 'info');
+                return false;
+            }
+
+            try {
+                // Find the candidate's MD file
+                const fileName = `${candidateName}.md`;
+                const fileHandle = await hiringDirectoryHandle.getFileHandle(fileName);
+                
+                // Read current file content
+                const file = await fileHandle.getFile();
+                const currentContent = await file.text();
+                
+                // Update the status line using regex
+                const statusPattern = /(\*\*Status:\*\*\s*)([^\n]+)/;
+                let updatedContent;
+                
+                if (statusPattern.test(currentContent)) {
+                    // Replace existing status
+                    updatedContent = currentContent.replace(statusPattern, `$1${newStatus}`);
+                } else {
+                    // If no status field exists, add it after the name header
+                    const nameHeader = `# ${candidateName}`;
+                    if (currentContent.includes(nameHeader)) {
+                        updatedContent = currentContent.replace(
+                            nameHeader,
+                            `${nameHeader}\n\n**Status:** ${newStatus}`
+                        );
+                    } else {
+                        // Add status at the beginning if no name header found
+                        updatedContent = `**Status:** ${newStatus}\n\n${currentContent}`;
+                    }
+                }
+                
+                // Write the updated content back to the file
+                const writable = await fileHandle.createWritable();
+                await writable.write(updatedContent);
+                await writable.close();
+                
+                console.log(`Successfully updated ${fileName} with status: ${newStatus}`);
+                showNotification(`✅ ${candidateName} moved to "${newStatus}" and MD file updated!`, 'success');
+                return true;
+                
+            } catch (error) {
+                console.error(`Error updating ${candidateName}.md:`, error);
+                
+                if (error.name === 'NotFoundError') {
+                    showNotification(`❌ File "${candidateName}.md" not found in the connected folder.`, 'error');
+                } else {
+                    showNotification(`❌ Failed to update ${candidateName}.md: ${error.message}`, 'error');
+                }
+                return false;
+            }
+        }
+
+        // Action functions
+        async function openInObsidian(candidateName) {
+            if (!isConnectedToVault || !isConnectedToFolder || !vaultName) {
+                showNotification('❌ Please complete the two-step setup first to open files in Obsidian.', 'error');
+                return;
+            }
+
+            try {
+                // Construct the perfect Obsidian URI using vault name and relative path
+                const encodedVault = encodeURIComponent(vaultName);
+                let filePath;
+                
+                if (hiringFolderPath && hiringFolderPath !== hiringDirectoryHandle.name) {
+                    // Hiring folder is inside the vault - use relative path
+                    filePath = `${hiringFolderPath}/${candidateName}`;
+                } else {
+                    // Hiring folder is outside vault or no relative path - just use filename
+                    filePath = candidateName;
+                }
+                
+                const encodedFilePath = encodeURIComponent(filePath);
+                const obsidianUri = `obsidian://open?vault=${encodedVault}&file=${encodedFilePath}`;
+                
+                console.log(`Opening in Obsidian: ${obsidianUri}`);
+                console.log(`Vault: ${vaultName}, File Path: ${filePath}`);
+                
+                // Open the file in Obsidian
+                window.open(obsidianUri, '_blank');
+                
+                showNotification(`📝 Opened ${candidateName}.md in "${vaultName}" vault!`, 'success');
+                
+            } catch (error) {
+                console.error('Error opening file in Obsidian:', error);
+                showNotification(`❌ Failed to open in Obsidian. Make sure Obsidian is installed and the vault is accessible.`, 'error');
+                
+                // Show helpful information with correct vault details
+                showObsidianTroubleshootingModal(candidateName);
+            }
+        }
+
+        // Get vault name from the connected folder
+        async function getVaultName() {
+            if (!hiringDirectoryHandle) {
+                throw new Error('No folder connected');
+            }
+            
+            // The vault name is typically the folder name we're connected to
+            // or we need to traverse up to find the .obsidian folder
+            return await detectVaultName();
+        }
+
+        // Detect vault name by looking for .obsidian folder or using folder name
+        async function detectVaultName() {
+            try {
+                // First, try to find .obsidian folder in current directory
+                try {
+                    await hiringDirectoryHandle.getDirectoryHandle('.obsidian');
+                    // If .obsidian exists here, this folder IS the vault
+                    return hiringDirectoryHandle.name;
+                } catch (obsidianNotFound) {
+                    // .obsidian not found, need to check parent directories
+                    // For now, assume the current folder is a subfolder of the vault
+                    // and use a reasonable default or the folder name
+                    
+                    // Try to get parent directory info if possible
+                    // Since we can't easily traverse up with File System Access API,
+                    // we'll use the current folder name as vault name
+                    return hiringDirectoryHandle.name;
+                }
+            } catch (error) {
+                // Fallback to using the folder name
+                return hiringDirectoryHandle.name;
+            }
+        }
+
+        // Fallback method using absolute path (requires File System Access API Level 2)
+        async function getFallbackObsidianUri(candidateName) {
+            try {
+                // This is experimental and may not work in all browsers
+                // Try to get the file handle and construct absolute path
+                const fileName = `${candidateName}.md`;
+                const fileHandle = await hiringDirectoryHandle.getFileHandle(fileName);
+                
+                // Since we can't get absolute paths easily with current File System Access API,
+                // we'll return null to indicate fallback failed
+                return null;
+                
+            } catch (error) {
+                return null;
+            }
+        }
+
+        // Show troubleshooting modal for Obsidian integration
+        function showObsidianTroubleshootingModal(candidateName) {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            
+            let filePath = candidateName;
+            if (hiringFolderPath && hiringFolderPath !== hiringDirectoryHandle.name) {
+                filePath = `${hiringFolderPath}/${candidateName}`;
+            }
+            
+            const obsidianUri = `obsidian://open?vault=${encodeURIComponent(vaultName)}&file=${encodeURIComponent(filePath)}`;
+            
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>🔧 Obsidian Integration Help</h3>
+                        <button class="close-btn" onclick="this.closest('.modal').remove()">&times;</button>
+                    </div>
+                    <div style="padding: 20px;">
+                        <h4>📝 Connection Details</h4>
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 15px 0; text-align: left;">
+                            <p><strong>Vault:</strong> ${vaultName}</p>
+                            <p><strong>File:</strong> ${filePath}.md</p>
+                            <p><strong>URI:</strong> <code style="font-size: 11px; word-break: break-all;">${obsidianUri}</code></p>
+                        </div>
+                        
+                        <h4>🔧 Troubleshooting Steps:</h4>
+                        <ol style="text-align: left; margin: 15px 0;">
+                            <li>Make sure Obsidian is installed and running</li>
+                            <li>Verify your browser allows custom protocol handlers</li>
+                            <li>Check that "${vaultName}" vault is open in Obsidian</li>
+                            <li>Ensure the file exists in the correct location</li>
+                        </ol>
+                        
+                        <h4>📋 Manual Steps:</h4>
+                        <ol style="text-align: left; margin: 15px 0;">
+                            <li>Open Obsidian</li>
+                            <li>Switch to "${vaultName}" vault</li>
+                            <li>Navigate to ${hiringFolderPath || 'your hiring folder'}</li>
+                            <li>Open <code>${candidateName}.md</code></li>
+                        </ol>
+                        
+                        <div style="margin-top: 20px;">
+                            <button class="action-btn btn-primary" onclick="copyToClipboard('${obsidianUri}'); showNotification('📋 Obsidian URI copied to clipboard!', 'success');">
+                                📋 Copy URI
+                            </button>
+                            <button class="action-btn btn-warning" onclick="copyToClipboard('${candidateName}.md'); showNotification('📋 Filename copied to clipboard!', 'success');">
+                                📋 Copy Filename
+                            </button>
+                            <button class="action-btn btn-success" onclick="this.closest('.modal').remove();">
+                                ✅ Got it
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // Helper function to copy text to clipboard
+        async function copyToClipboard(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+            } catch (error) {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            }
+        }
+
+        function moveToOffer(candidateName) {
+            alert(`Moving ${candidateName} to Offer Stage...`);
+        }
+
+        function scheduleFollowup(candidateName) {
+            alert(`Scheduling follow-up for ${candidateName}...`);
+        }
+
+        // Export functions
+        function exportToCSV() {
+            const csvContent = "data:text/csv;charset=utf-8," + 
+                "Name,Status,Region,Date,Rating,Location,Experience,Notes\n" +
+                allCandidates.map(c => 
+                    `"${c.name}","${c.status}","${c.region}","${c.date}","${c.rating}","${c.location}","${c.experience}","${c.notes ? c.notes.replace(/"/g, '""') : ''}"`
+                ).join("\n");
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "hiring_pipeline.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('candidateModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Initialize dashboard when page loads
+        document.addEventListener('DOMContentLoaded', initializeDashboard);
+    </script>
+</body>
+</html>
