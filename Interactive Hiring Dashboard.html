@@ -665,21 +665,15 @@
                     <option value="Not Hired - Previous Cycle">Previous Cycle</option>
                 </select>
                 
-                <select class="filter-select" id="sentimentFilter">
-                    <option value="">All Sentiment</option>
-                    <option value="1">Sentiment 1</option>
-                    <option value="2">Sentiment 2</option>
-                    <option value="3">Sentiment 3</option>
-                    <option value="4">Sentiment 4</option>
-                    <option value="5">Sentiment 5</option>
+                <select class="filter-select" id="scoreFilter" multiple>
+                    <option value="1">Score 1</option>
+                    <option value="2">Score 2</option>
+                    <option value="3">Score 3</option>
+                    <option value="4">Score 4</option>
+                    <option value="5">Score 5</option>
                 </select>
             </div>
 
-            <div class="filter-group">
-                <button class="filter-btn" onclick="showQuickFilter('emea-recent')">EMEA Recent</button>
-                <button class="filter-btn" onclick="showQuickFilter('high-priority')">High Priority</button>
-                <button class="filter-btn" onclick="showQuickFilter('this-week')">This Week</button>
-            </div>
 
             <div class="filter-group">
                 <button class="toggle-view-btn" onclick="toggleView()" id="toggleViewBtn">🔥 Current Hiring</button>
@@ -1625,20 +1619,14 @@
             if (candidate.status === 'Offer Stage') {
                 actionButtons = `
                     <button class="action-btn btn-primary" onclick="event.stopPropagation(); openInObsidian('${candidate.name}')">📝 Notes</button>
-                    <div class="sentiment-controls">
-                        <button class="sentiment-btn negative" onclick="event.stopPropagation(); decreaseSentiment('${candidate.name}')">👎</button>
-                        <span class="sentiment-value">${sentiment}</span>
-                        <button class="sentiment-btn positive" onclick="event.stopPropagation(); increaseSentiment('${candidate.name}')">👍</button>
-                    </div>
                     <button class="action-btn btn-success" onclick="event.stopPropagation(); hireCandidateFromOffer('${candidate.name}')">✅ Hire</button>
-                    <button class="action-btn btn-danger" onclick="event.stopPropagation(); discardCandidateFromOffer('${candidate.name}')">🗑️ Discard</button>
+                    <button class="action-btn btn-danger" onclick="event.stopPropagation(); discardCandidateFromOffer('${candidate.name}')">🗑️ Pass</button>
                 `;
             } else if (isHiredOrNotHired) {
                 actionButtons = `
                     <button class="action-btn btn-primary" onclick="event.stopPropagation(); openInObsidian('${candidate.name}')">📝 Notes</button>
                     <div class="sentiment-controls">
                         <button class="sentiment-btn negative" onclick="event.stopPropagation(); decreaseSentiment('${candidate.name}')">👎</button>
-                        <span class="sentiment-value">${sentiment}</span>
                         <button class="sentiment-btn positive" onclick="event.stopPropagation(); increaseSentiment('${candidate.name}')">👍</button>
                     </div>
                 `;
@@ -1647,10 +1635,9 @@
                     <button class="action-btn btn-primary" onclick="event.stopPropagation(); openInObsidian('${candidate.name}')">📝 Notes</button>
                     <div class="sentiment-controls">
                         <button class="sentiment-btn negative" onclick="event.stopPropagation(); decreaseSentiment('${candidate.name}')">👎</button>
-                        <span class="sentiment-value">${sentiment}</span>
                         <button class="sentiment-btn positive" onclick="event.stopPropagation(); increaseSentiment('${candidate.name}')">👍</button>
                     </div>
-                    <button class="action-btn btn-danger" onclick="event.stopPropagation(); discardCandidate('${candidate.name}')">🗑️ Discard</button>
+                    <button class="action-btn btn-danger" onclick="event.stopPropagation(); discardCandidate('${candidate.name}')">🗑️ Pass</button>
                 `;
             }
             
@@ -1855,7 +1842,7 @@
             document.getElementById('regionFilter').addEventListener('change', handleFilter);
             document.getElementById('positionFilter').addEventListener('change', handleFilter);
             document.getElementById('statusFilter').addEventListener('change', handleFilter);
-            document.getElementById('sentimentFilter').addEventListener('change', handleFilter);
+            document.getElementById('scoreFilter').addEventListener('change', handleFilter);
         }
 
         // Handle search
@@ -1874,7 +1861,7 @@
             const regionFilter = document.getElementById('regionFilter').value;
             const positionFilter = document.getElementById('positionFilter').value;
             const statusFilter = document.getElementById('statusFilter').value;
-            const sentimentFilter = document.getElementById('sentimentFilter').value;
+            const scoreFilter = Array.from(document.getElementById('scoreFilter').selectedOptions).map(option => option.value);
 
             filteredCandidates = allCandidates.filter(candidate => {
                 const matchesSearch = !searchTerm || 
@@ -1887,9 +1874,9 @@
                 const matchesRegion = !regionFilter || candidate.region === regionFilter;
                 const matchesPosition = !positionFilter || candidate.position === positionFilter;
                 const matchesStatus = !statusFilter || candidate.status === statusFilter;
-                const matchesSentiment = !sentimentFilter || (candidate.sentiment && candidate.sentiment.toString() === sentimentFilter);
+                const matchesScore = scoreFilter.length === 0 || scoreFilter.includes((candidate.sentiment || 3).toString());
 
-                return matchesSearch && matchesRegion && matchesPosition && matchesStatus && matchesSentiment;
+                return matchesSearch && matchesRegion && matchesPosition && matchesStatus && matchesScore;
             });
 
             renderCurrentView();
@@ -2623,7 +2610,7 @@
     
     <!-- Version indicator -->
     <div style="position: fixed; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px; font-size: 12px; z-index: 1000;">
-        v2.1.0 - 2024-01-11
+        v2.2.0 - 2024-01-11
     </div>
 </body>
 </html>

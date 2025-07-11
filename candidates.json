@@ -61,7 +61,7 @@
         "unassigned",
         "not-hired"
       ],
-      "sentiment": 3
+      "sentiment": 2
     },
     {
       "name": "Raul",
@@ -208,7 +208,7 @@
         "apac",
         "not-hired"
       ],
-      "sentiment": 3
+      "sentiment": 1
     },
     {
       "name": "2 - Process",
@@ -266,7 +266,7 @@
         "emea",
         "not-hired"
       ],
-      "sentiment": 3
+      "sentiment": 1
     },
     {
       "name": "Manon presentation",
@@ -476,7 +476,7 @@
         "emea",
         "not-hired"
       ],
-      "sentiment": 3
+      "sentiment": 1
     },
     {
       "name": "Tobias Fischer presentation",
@@ -2645,7 +2645,7 @@
         "emea",
         "not-hired"
       ],
-      "sentiment": 3
+      "sentiment": 1
     },
     {
       "name": "Jonathan Jowett",
@@ -3737,7 +3737,7 @@
         "unassigned",
         "recent-interview---pending"
       ],
-      "sentiment": 3
+      "sentiment": 1
     },
     {
       "name": "James Martin",
@@ -4019,10 +4019,10 @@
     "offer_stage": 1,
     "not_hired_negative": 6,
     "not_hired_previous": 0,
-    "generation_date": "2025-07-11T17:22:56.797Z"
+    "generation_date": "2025-07-11T17:30:28.516Z"
   },
   "metadata": {
-    "generated_at": "2025-07-11T17:22:56.797Z",
+    "generated_at": "2025-07-11T17:30:28.516Z",
     "total_files_processed": 192,
     "source_directory": "File System Access API"
   }
