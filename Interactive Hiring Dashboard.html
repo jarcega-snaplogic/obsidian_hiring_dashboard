@@ -310,6 +310,17 @@
             transform: scale(1.05);
         }
 
+        .btn-icon {
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        .btn-text {
+            font-size: 12px;
+            line-height: 1;
+            margin-top: 2px;
+        }
+
         .toggle-view-btn {
             padding: 10px 20px;
             background: #27ae60;
@@ -761,8 +772,8 @@
 
 
             <div class="filter-group">
-                <button class="toggle-view-btn" onclick="toggleView()" id="toggleViewBtn">🔥 Current Hiring</button>
-                <button class="toggle-view-btn" onclick="toggleDisplayMode()" id="toggleDisplayBtn">📋 Card View</button>
+                <button class="toggle-view-btn" onclick="toggleView()" id="toggleViewBtn">📋 Past Hiring</button>
+                <button class="toggle-view-btn" onclick="toggleDisplayMode()" id="toggleDisplayBtn">📋 List View</button>
                 <button class="toggle-view-btn" onclick="refreshDataFromFiles()" id="refreshDataBtn">🔄 Refresh Data</button>
             </div>
         </div>
@@ -1703,9 +1714,18 @@
             
             if (candidate.status === 'Offer Stage') {
                 actionButtons = `
-                    <button class="action-btn btn-primary" onclick="event.stopPropagation(); openInObsidian('${candidate.name}')">📝 Notes</button>
-                    <button class="action-btn btn-success" onclick="event.stopPropagation(); hireCandidateFromOffer('${candidate.name}')">✅ Hire</button>
-                    <button class="action-btn btn-danger" onclick="event.stopPropagation(); discardCandidateFromOffer('${candidate.name}')">🗑️ Pass</button>
+                    <button class="action-btn btn-primary" onclick="event.stopPropagation(); openInObsidian('${candidate.name}')">
+                        <div class="btn-icon">📝</div>
+                        <div class="btn-text">Notes</div>
+                    </button>
+                    <button class="action-btn btn-success" onclick="event.stopPropagation(); hireCandidateFromOffer('${candidate.name}')">
+                        <div class="btn-icon">✅</div>
+                        <div class="btn-text">Hire</div>
+                    </button>
+                    <button class="action-btn btn-danger" onclick="event.stopPropagation(); discardCandidateFromOffer('${candidate.name}')">
+                        <div class="btn-icon">🗑️</div>
+                        <div class="btn-text">Pass</div>
+                    </button>
                 `;
             } else if (isHiredOrNotHired) {
                 actionButtons = `
@@ -1786,7 +1806,14 @@
                 }
             });
 
-            filteredCandidates.forEach(candidate => {
+            // Sort candidates by date (most recent first) within each status group
+            const sortedCandidates = [...filteredCandidates].sort((a, b) => {
+                const dateA = new Date(a.date || '1970-01-01');
+                const dateB = new Date(b.date || '1970-01-01');
+                return dateB - dateA; // Most recent first
+            });
+
+            sortedCandidates.forEach(candidate => {
                 const candidateCard = createCandidateCard(candidate);
                 
                 if (candidate.status === 'Hiring Manager') {
@@ -1821,7 +1848,14 @@
                 }
             });
 
-            filteredCandidates.forEach(candidate => {
+            // Sort candidates by date (most recent first) within each status group
+            const sortedCandidates = [...filteredCandidates].sort((a, b) => {
+                const dateA = new Date(a.date || '1970-01-01');
+                const dateB = new Date(b.date || '1970-01-01');
+                return dateB - dateA; // Most recent first
+            });
+
+            sortedCandidates.forEach(candidate => {
                 const candidateCard = createCandidateCard(candidate);
                 
                 if (candidate.status === 'Hired') {
@@ -2239,16 +2273,20 @@
         }
 
         function updateCandidateStatus(candidateName, newStatus) {
+            const currentDate = new Date().toISOString().split('T')[0];
+            
             // Update in allCandidates array
             const candidate = allCandidates.find(c => c.name === candidateName);
             if (candidate) {
                 candidate.status = newStatus;
+                candidate.date = currentDate;
             }
             
             // Update in filteredCandidates array
             const filteredCandidate = filteredCandidates.find(c => c.name === candidateName);
             if (filteredCandidate) {
                 filteredCandidate.status = newStatus;
+                filteredCandidate.date = currentDate;
             }
         }
 
@@ -2268,24 +2306,40 @@
                 const file = await fileHandle.getFile();
                 const currentContent = await file.text();
                 
-                // Update the status line using regex
+                // Update the status and date
                 const statusPattern = /(\*\*Status:\*\*\s*)([^\n]+)/;
-                let updatedContent;
+                const datePattern = /(\*\*Date:\*\*\s*)([^\n]+)/;
+                const currentDate = new Date().toISOString().split('T')[0];
+                let updatedContent = currentContent;
                 
-                if (statusPattern.test(currentContent)) {
-                    // Replace existing status
-                    updatedContent = currentContent.replace(statusPattern, `$1${newStatus}`);
+                // Update status
+                if (statusPattern.test(updatedContent)) {
+                    updatedContent = updatedContent.replace(statusPattern, `$1${newStatus}`);
                 } else {
                     // If no status field exists, add it after the name header
                     const nameHeader = `# ${candidateName}`;
-                    if (currentContent.includes(nameHeader)) {
-                        updatedContent = currentContent.replace(
+                    if (updatedContent.includes(nameHeader)) {
+                        updatedContent = updatedContent.replace(
                             nameHeader,
                             `${nameHeader}\n\n**Status:** ${newStatus}`
                         );
                     } else {
                         // Add status at the beginning if no name header found
-                        updatedContent = `**Status:** ${newStatus}\n\n${currentContent}`;
+                        updatedContent = `**Status:** ${newStatus}\n\n${updatedContent}`;
+                    }
+                }
+                
+                // Update date
+                if (datePattern.test(updatedContent)) {
+                    updatedContent = updatedContent.replace(datePattern, `$1${currentDate}`);
+                } else {
+                    // Add date after status if it doesn't exist
+                    const statusLine = /(\*\*Status:\*\*\s*[^\n]+)/;
+                    if (statusLine.test(updatedContent)) {
+                        updatedContent = updatedContent.replace(
+                            statusLine,
+                            `$1\n**Date:** ${currentDate}`
+                        );
                     }
                 }
                 
@@ -2618,14 +2672,17 @@
             if (candidate) {
                 const currentSentiment = candidate.sentiment || 3;
                 const newSentiment = Math.min(5, currentSentiment + 1);
+                const currentDate = new Date().toISOString().split('T')[0];
                 
-                // Update sentiment in candidate data
+                // Update sentiment and date in candidate data
                 candidate.sentiment = newSentiment;
+                candidate.date = currentDate;
                 
                 // Update in filteredCandidates as well
                 const filteredCandidate = filteredCandidates.find(c => c.name === candidateName);
                 if (filteredCandidate) {
                     filteredCandidate.sentiment = newSentiment;
+                    filteredCandidate.date = currentDate;
                 }
                 
                 // Update sentiment in markdown file
@@ -2646,14 +2703,17 @@
             if (candidate) {
                 const currentSentiment = candidate.sentiment || 3;
                 const newSentiment = Math.max(1, currentSentiment - 1);
+                const currentDate = new Date().toISOString().split('T')[0];
                 
-                // Update sentiment in candidate data
+                // Update sentiment and date in candidate data
                 candidate.sentiment = newSentiment;
+                candidate.date = currentDate;
                 
                 // Update in filteredCandidates as well
                 const filteredCandidate = filteredCandidates.find(c => c.name === candidateName);
                 if (filteredCandidate) {
                     filteredCandidate.sentiment = newSentiment;
+                    filteredCandidate.date = currentDate;
                 }
                 
                 // Update sentiment in markdown file
@@ -2732,7 +2792,7 @@
     
     <!-- Version indicator -->
     <div style="position: fixed; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px; font-size: 12px; z-index: 1000;">
-        v2.3.0 - 2024-01-11
+        v2.4.0 - 2024-01-11
     </div>
 </body>
 </html>

@@ -3909,7 +3909,7 @@
     },
     {
       "name": "Jonathan Baggott",
-      "status": "Regional VP",
+      "status": "Offer Stage",
       "date": "2025-07-01",
       "position": "Sales Engineer",
       "region": "EMEA",
@@ -4016,13 +4016,13 @@
     "recent_interviews": 2,
     "pending_decisions": 2,
     "hired": 32,
-    "offer_stage": 0,
+    "offer_stage": 1,
     "not_hired_negative": 6,
     "not_hired_previous": 0,
-    "generation_date": "2025-07-11T17:37:26.293Z"
+    "generation_date": "2025-07-11T18:04:47.855Z"
   },
   "metadata": {
-    "generated_at": "2025-07-11T17:37:26.293Z",
+    "generated_at": "2025-07-11T18:04:47.855Z",
     "total_files_processed": 192,
     "source_directory": "File System Access API"
   }
