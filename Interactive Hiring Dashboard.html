@@ -228,6 +228,20 @@
             align-items: flex-start;
             margin-bottom: 10px;
         }
+        
+        .sentiment-score {
+            background: rgba(44, 62, 80, 0.1);
+            border: 2px solid rgba(44, 62, 80, 0.2);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+            color: #2c3e50;
+        }
 
         .candidate-name {
             font-size: 16px;
@@ -282,6 +296,11 @@
         .btn-success { background: #27ae60; color: white; }
         .btn-warning { background: #f39c12; color: white; }
         .btn-danger { background: #e74c3c; color: white; }
+        
+        .btn-danger:hover { 
+            background: #c0392b; 
+            color: white; 
+        }
 
         .action-btn:hover {
             opacity: 0.8;
@@ -448,8 +467,8 @@
         .sentiment-1 { background: linear-gradient(135deg, #ffebee, #ffcdd2); border-left-color: #f44336; }
         .sentiment-2 { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border-left-color: #ff9800; }
         .sentiment-3 { background: white; border-left-color: #3498db; }
-        .sentiment-4 { background: linear-gradient(135deg, #e8f5e8, #c8e6c9); border-left-color: #4caf50; }
-        .sentiment-5 { background: linear-gradient(135deg, #e0f2f1, #b2dfdb); border-left-color: #00bcd4; }
+        .sentiment-4 { background: linear-gradient(135deg, #e0f2f1, #b2dfdb); border-left-color: #00bcd4; }
+        .sentiment-5 { background: linear-gradient(135deg, #e8f5e8, #c8e6c9); border-left-color: #4caf50; }
 
         .sentiment-controls {
             display: flex;
@@ -645,6 +664,15 @@
                     <option value="Not Hired - Negative">Not Hired - Negative</option>
                     <option value="Not Hired - Previous Cycle">Previous Cycle</option>
                 </select>
+                
+                <select class="filter-select" id="sentimentFilter">
+                    <option value="">All Sentiment</option>
+                    <option value="1">Sentiment 1</option>
+                    <option value="2">Sentiment 2</option>
+                    <option value="3">Sentiment 3</option>
+                    <option value="4">Sentiment 4</option>
+                    <option value="5">Sentiment 5</option>
+                </select>
             </div>
 
             <div class="filter-group">
@@ -653,9 +681,11 @@
                 <button class="filter-btn" onclick="showQuickFilter('this-week')">This Week</button>
             </div>
 
-            <button class="toggle-view-btn" onclick="toggleView()" id="toggleViewBtn">🔥 Current Hiring</button>
-            <button class="toggle-view-btn" onclick="toggleDisplayMode()" id="toggleDisplayBtn">📋 Card View</button>
-            <button class="toggle-view-btn" onclick="refreshDataFromFiles()" id="refreshDataBtn">🔄 Refresh Data</button>
+            <div class="filter-group">
+                <button class="toggle-view-btn" onclick="toggleView()" id="toggleViewBtn">🔥 Current Hiring</button>
+                <button class="toggle-view-btn" onclick="toggleDisplayMode()" id="toggleDisplayBtn">📋 Card View</button>
+                <button class="toggle-view-btn" onclick="refreshDataFromFiles()" id="refreshDataBtn">🔄 Refresh Data</button>
+            </div>
         </div>
 
 
@@ -1590,6 +1620,8 @@
             
             // Sentiment controls and action buttons
             let actionButtons = '';
+            const isHiredOrNotHired = candidate.status.includes('Hired') || candidate.status.includes('Not Hired');
+            
             if (candidate.status === 'Offer Stage') {
                 actionButtons = `
                     <button class="action-btn btn-primary" onclick="event.stopPropagation(); openInObsidian('${candidate.name}')">📝 Notes</button>
@@ -1599,7 +1631,16 @@
                         <button class="sentiment-btn positive" onclick="event.stopPropagation(); increaseSentiment('${candidate.name}')">👍</button>
                     </div>
                     <button class="action-btn btn-success" onclick="event.stopPropagation(); hireCandidateFromOffer('${candidate.name}')">✅ Hire</button>
-                    <button class="action-btn btn-danger" onclick="event.stopPropagation(); discardCandidateFromOffer('${candidate.name}')">❌ Discard</button>
+                    <button class="action-btn btn-danger" onclick="event.stopPropagation(); discardCandidateFromOffer('${candidate.name}')">🗑️ Discard</button>
+                `;
+            } else if (isHiredOrNotHired) {
+                actionButtons = `
+                    <button class="action-btn btn-primary" onclick="event.stopPropagation(); openInObsidian('${candidate.name}')">📝 Notes</button>
+                    <div class="sentiment-controls">
+                        <button class="sentiment-btn negative" onclick="event.stopPropagation(); decreaseSentiment('${candidate.name}')">👎</button>
+                        <span class="sentiment-value">${sentiment}</span>
+                        <button class="sentiment-btn positive" onclick="event.stopPropagation(); increaseSentiment('${candidate.name}')">👍</button>
+                    </div>
                 `;
             } else {
                 actionButtons = `
@@ -1609,7 +1650,7 @@
                         <span class="sentiment-value">${sentiment}</span>
                         <button class="sentiment-btn positive" onclick="event.stopPropagation(); increaseSentiment('${candidate.name}')">👍</button>
                     </div>
-                    <button class="action-btn btn-danger" onclick="event.stopPropagation(); discardCandidate('${candidate.name}')">❌ Discard</button>
+                    <button class="action-btn btn-danger" onclick="event.stopPropagation(); discardCandidate('${candidate.name}')">🗑️ Discard</button>
                 `;
             }
             
@@ -1619,6 +1660,7 @@
                         <div class="candidate-name">${candidate.name}</div>
                         <div class="candidate-date">${candidate.date}</div>
                     </div>
+                    <div class="sentiment-score">${sentiment}</div>
                 </div>
                 <div class="candidate-details">
                     <span class="detail-tag region-${regionClass}">${candidate.region}</span>
@@ -1813,6 +1855,7 @@
             document.getElementById('regionFilter').addEventListener('change', handleFilter);
             document.getElementById('positionFilter').addEventListener('change', handleFilter);
             document.getElementById('statusFilter').addEventListener('change', handleFilter);
+            document.getElementById('sentimentFilter').addEventListener('change', handleFilter);
         }
 
         // Handle search
@@ -1831,6 +1874,7 @@
             const regionFilter = document.getElementById('regionFilter').value;
             const positionFilter = document.getElementById('positionFilter').value;
             const statusFilter = document.getElementById('statusFilter').value;
+            const sentimentFilter = document.getElementById('sentimentFilter').value;
 
             filteredCandidates = allCandidates.filter(candidate => {
                 const matchesSearch = !searchTerm || 
@@ -1843,8 +1887,9 @@
                 const matchesRegion = !regionFilter || candidate.region === regionFilter;
                 const matchesPosition = !positionFilter || candidate.position === positionFilter;
                 const matchesStatus = !statusFilter || candidate.status === statusFilter;
+                const matchesSentiment = !sentimentFilter || (candidate.sentiment && candidate.sentiment.toString() === sentimentFilter);
 
-                return matchesSearch && matchesRegion && matchesPosition && matchesStatus;
+                return matchesSearch && matchesRegion && matchesPosition && matchesStatus && matchesSentiment;
             });
 
             renderCurrentView();
@@ -1953,8 +1998,6 @@
                 <div>
                     <h4>🎯 Actions</h4>
                     <button class="action-btn btn-primary" onclick="openInObsidian('${candidate.name}')">Open in Obsidian</button>
-                    <button class="action-btn btn-success" onclick="moveToOffer('${candidate.name}')">Move to Offer</button>
-                    <button class="action-btn btn-warning" onclick="scheduleFollowup('${candidate.name}')">Schedule Follow-up</button>
                 </div>
             `;
             document.getElementById('candidateModal').style.display = 'block';
@@ -2042,26 +2085,10 @@
                 // Update candidate status in data
                 updateCandidateStatus(candidateName, newStatus);
                 
-                // Find the correct candidate list container in this column
-                const candidateList = column.querySelector('.candidate-list');
-                if (candidateList) {
-                    // Remove dragged element from its current parent
-                    if (draggedElement.parentNode) {
-                        draggedElement.parentNode.removeChild(draggedElement);
-                    }
-                    // Move the element to new column
-                    candidateList.appendChild(draggedElement);
-                    console.log(`Successfully moved ${candidateName} to ${newStatus}`);
-                } else {
-                    console.error('Could not find candidate list in column');
-                }
+                // Re-render the current view to update all cards and buttons
+                renderCurrentView();
                 
-                // Update the dashboard counts based on current view
-                if (currentView === 'currentHiring') {
-                    updateCurrentHiringColumnCounts();
-                } else if (currentView === 'pastHiring') {
-                    updatePastHiringColumnCounts();
-                }
+                console.log(`Successfully moved ${candidateName} to ${newStatus}`);
                 
                 // Update the actual MD file
                 updateCandidateFile(candidateName, newStatus);
