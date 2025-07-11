@@ -4019,11 +4019,11 @@
     "offer_stage": 1,
     "not_hired_negative": 6,
     "not_hired_previous": 0,
-    "generation_date": "2025-07-11T17:13:37.677Z"
+    "generation_date": "2025-07-11T17:22:56.797Z"
   },
   "metadata": {
-    "generated_at": "2025-07-11T17:13:37.677Z",
-    "total_files_processed": 193,
+    "generated_at": "2025-07-11T17:22:56.797Z",
+    "total_files_processed": 192,
     "source_directory": "File System Access API"
   }
 }
