@@ -533,62 +533,11 @@
                 <button class="filter-btn" onclick="showQuickFilter('this-week')">This Week</button>
             </div>
 
-            <button class="toggle-view-btn" onclick="toggleView()" id="toggleViewBtn">📊 Pipeline View</button>
+            <button class="toggle-view-btn" onclick="toggleView()" id="toggleViewBtn">🔥 Current Hiring</button>
+            <button class="toggle-view-btn" onclick="toggleDisplayMode()" id="toggleDisplayBtn">📋 Card View</button>
             <button class="toggle-view-btn" onclick="refreshDataFromFiles()" id="refreshDataBtn">🔄 Refresh Data</button>
         </div>
 
-        <!-- Pipeline View -->
-        <div class="pipeline-container" id="pipelineView">
-            <div class="pipeline-column">
-                <div class="column-header">
-                    <span class="column-title">🔥 Recent Interviews</span>
-                    <span class="column-count" id="recentCount">0</span>
-                </div>
-                <div class="candidate-list" id="recentList">
-                    <!-- Recent candidates will be populated here -->
-                </div>
-            </div>
-
-            <div class="pipeline-column">
-                <div class="column-header">
-                    <span class="column-title">💼 Offer Stage</span>
-                    <span class="column-count" id="offerCount">0</span>
-                </div>
-                <div class="candidate-list" id="offerList">
-                    <!-- Offer stage candidates -->
-                </div>
-            </div>
-
-            <div class="pipeline-column">
-                <div class="column-header">
-                    <span class="column-title">✅ Hired</span>
-                    <span class="column-count" id="hiredCount">0</span>
-                </div>
-                <div class="candidate-list" id="hiredList">
-                    <!-- Hired candidates -->
-                </div>
-            </div>
-
-            <div class="pipeline-column">
-                <div class="column-header">
-                    <span class="column-title">❌ Not Hired - Negative</span>
-                    <span class="column-count" id="notHiredNegativeCount">0</span>
-                </div>
-                <div class="candidate-list" id="notHiredNegativeList">
-                    <!-- Not hired negative candidates -->
-                </div>
-            </div>
-
-            <div class="pipeline-column">
-                <div class="column-header">
-                    <span class="column-title">⏸️ Not Hired - Previous</span>
-                    <span class="column-count" id="notHiredCount">0</span>
-                </div>
-                <div class="candidate-list" id="notHiredList">
-                    <!-- Not hired previous cycle candidates -->
-                </div>
-            </div>
-        </div>
 
         <!-- Current Hiring View -->
         <div class="pipeline-container" id="currentHiringView" style="display: none;">
@@ -647,11 +596,11 @@
         <div class="pipeline-container" id="pastHiringView" style="display: none;">
             <div class="pipeline-column">
                 <div class="column-header">
-                    <span class="column-title">💼 Offer Stage</span>
-                    <span class="column-count" id="pastOfferCount">0</span>
+                    <span class="column-title">✅ Hired</span>
+                    <span class="column-count" id="pastHiredCount">0</span>
                 </div>
-                <div class="candidate-list" id="pastOfferList">
-                    <!-- Past Offer Stage candidates -->
+                <div class="candidate-list" id="pastHiredList">
+                    <!-- Hired candidates -->
                 </div>
             </div>
 
@@ -738,13 +687,12 @@
         };
         let allCandidates = [];
         let filteredCandidates = [];
-        let currentView = 'pipeline';
-        const viewOrder = ['pipeline', 'currentHiring', 'pastHiring', 'list'];
+        let currentView = 'currentHiring';
+        let displayMode = 'cards'; // 'cards' or 'list'
+        const viewOrder = ['currentHiring', 'pastHiring'];
         const viewLabels = {
-            'pipeline': '📊 Pipeline View',
             'currentHiring': '🔥 Current Hiring',
-            'pastHiring': '📋 Past Hiring',
-            'list': '📋 List View'
+            'pastHiring': '📋 Past Hiring'
         };
 
         // No embedded data - everything loads from connected folder
@@ -856,8 +804,8 @@
                 prompt.remove();
             }
             
-            // Show dashboard content
-            document.getElementById('pipelineView').style.display = 'flex';
+            // Show dashboard content - start with Current Hiring view
+            renderCurrentView();
         }
 
         // File System Access API functions - Step 1: Connect to Obsidian Vault
@@ -1334,8 +1282,7 @@
                     await saveCandidatesJson(newCandidateData);
                     
                     // Refresh the dashboard
-                    renderPipelineView();
-                    renderListView();
+                    renderCurrentView();
                     updateStats();
                     populatePositionFilter();
                     
@@ -1392,8 +1339,7 @@
                     allCandidates = candidateData.candidates;
                     filteredCandidates = [...allCandidates];
                     
-                    renderPipelineView();
-                    renderListView();
+                    renderCurrentView();
                     updateStats();
                     populatePositionFilter();
                     
@@ -1413,8 +1359,7 @@
                         allCandidates = candidateData.candidates;
                         filteredCandidates = [...allCandidates];
                         
-                        renderPipelineView();
-                        renderListView();
+                        renderCurrentView();
                         updateStats();
                         populatePositionFilter();
                         
@@ -1549,6 +1494,22 @@
 
             const regionClass = candidate.region ? candidate.region.toLowerCase().replace(' ', '-') : 'unknown';
             
+            // Special actions for Offer Stage candidates
+            let actionButtons = '';
+            if (candidate.status === 'Offer Stage') {
+                actionButtons = `
+                    <button class="action-btn btn-primary" onclick="event.stopPropagation(); openInObsidian('${candidate.name}')">📝 Notes</button>
+                    <button class="action-btn btn-success" onclick="event.stopPropagation(); hireCandidateFromOffer('${candidate.name}')">✅ Hire</button>
+                    <button class="action-btn btn-danger" onclick="event.stopPropagation(); discardCandidateFromOffer('${candidate.name}')">❌ Discard</button>
+                `;
+            } else {
+                actionButtons = `
+                    <button class="action-btn btn-primary" onclick="event.stopPropagation(); openInObsidian('${candidate.name}')">📝 Notes</button>
+                    <button class="action-btn btn-success" onclick="event.stopPropagation(); moveToOffer('${candidate.name}')">💼 Offer</button>
+                    <button class="action-btn btn-warning" onclick="event.stopPropagation(); scheduleFollowup('${candidate.name}')">📅 Follow-up</button>
+                `;
+            }
+            
             card.innerHTML = `
                 <div class="candidate-header">
                     <div>
@@ -1562,9 +1523,7 @@
                     <span class="detail-tag">${candidate.location}</span>
                 </div>
                 <div class="candidate-actions">
-                    <button class="action-btn btn-primary" onclick="event.stopPropagation(); openInObsidian('${candidate.name}')">📝 Notes</button>
-                    <button class="action-btn btn-success" onclick="event.stopPropagation(); moveToOffer('${candidate.name}')">💼 Offer</button>
-                    <button class="action-btn btn-warning" onclick="event.stopPropagation(); scheduleFollowup('${candidate.name}')">📅 Follow-up</button>
+                    ${actionButtons}
                 </div>
             `;
 
@@ -1631,13 +1590,13 @@
 
         // Render past hiring view
         function renderPastHiringView() {
-            const pastOfferList = document.getElementById('pastOfferList');
+            const pastHiredList = document.getElementById('pastHiredList');
             const notHiredGeneralList = document.getElementById('notHiredGeneralList');
             const notHiredPositiveList = document.getElementById('notHiredPositiveList');
             const pastNotHiredNegativeList = document.getElementById('pastNotHiredNegativeList');
 
             // Clear existing content and setup drop zones
-            [pastOfferList, notHiredGeneralList, notHiredPositiveList, pastNotHiredNegativeList].forEach(list => {
+            [pastHiredList, notHiredGeneralList, notHiredPositiveList, pastNotHiredNegativeList].forEach(list => {
                 list.innerHTML = '';
                 const column = list.closest('.pipeline-column');
                 if (column) {
@@ -1648,8 +1607,8 @@
             filteredCandidates.forEach(candidate => {
                 const candidateCard = createCandidateCard(candidate);
                 
-                if (candidate.status === 'Offer Stage' || candidate.status === 'Hired') {
-                    pastOfferList.appendChild(candidateCard);
+                if (candidate.status === 'Hired') {
+                    pastHiredList.appendChild(candidateCard);
                 } else if (candidate.status === 'Not Hired') {
                     notHiredGeneralList.appendChild(candidateCard);
                 } else if (candidate.status === 'Not Hired - Positive') {
@@ -1682,13 +1641,13 @@
         // Update column counts for past hiring view
         function updatePastHiringColumnCounts() {
             const counts = {
-                pastOffer: filteredCandidates.filter(c => c.status === 'Offer Stage' || c.status === 'Hired').length,
+                pastHired: filteredCandidates.filter(c => c.status === 'Hired').length,
                 notHiredGeneral: filteredCandidates.filter(c => c.status === 'Not Hired').length,
                 notHiredPositive: filteredCandidates.filter(c => c.status === 'Not Hired - Positive').length,
                 pastNotHiredNegative: filteredCandidates.filter(c => c.status === 'Not Hired - Negative').length
             };
 
-            document.getElementById('pastOfferCount').textContent = counts.pastOffer;
+            document.getElementById('pastHiredCount').textContent = counts.pastHired;
             document.getElementById('notHiredGeneralCount').textContent = counts.notHiredGeneral;
             document.getElementById('notHiredPositiveCount').textContent = counts.notHiredPositive;
             document.getElementById('pastNotHiredNegativeCount').textContent = counts.pastNotHiredNegative;
@@ -1801,20 +1760,7 @@
                 return matchesSearch && matchesRegion && matchesPosition && matchesStatus;
             });
 
-            switch(currentView) {
-                case 'pipeline':
-                    renderPipelineView();
-                    break;
-                case 'currentHiring':
-                    renderCurrentHiringView();
-                    break;
-                case 'pastHiring':
-                    renderPastHiringView();
-                    break;
-                case 'list':
-                    renderListView();
-                    break;
-            }
+            renderCurrentView();
         }
 
         // Quick filters
@@ -1831,45 +1777,19 @@
                 case 'high-priority':
                     filteredCandidates = allCandidates.filter(c => 
                         c.rating && (c.rating.includes('4') || c.rating.includes('5')));
-                    switch(currentView) {
-                        case 'pipeline':
-                            renderPipelineView();
-                            break;
-                        case 'currentHiring':
-                            renderCurrentHiringView();
-                            break;
-                        case 'pastHiring':
-                            renderPastHiringView();
-                            break;
-                        case 'list':
-                            renderListView();
-                            break;
-                    }
+                    renderCurrentView();
                     break;
                 case 'this-week':
                     const oneWeekAgo = new Date();
                     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
                     filteredCandidates = allCandidates.filter(c => 
                         c.date && new Date(c.date) >= oneWeekAgo);
-                    switch(currentView) {
-                        case 'pipeline':
-                            renderPipelineView();
-                            break;
-                        case 'currentHiring':
-                            renderCurrentHiringView();
-                            break;
-                        case 'pastHiring':
-                            renderPastHiringView();
-                            break;
-                        case 'list':
-                            renderListView();
-                            break;
-                    }
+                    renderCurrentView();
                     break;
             }
         }
 
-        // Toggle between all 4 views
+        // Toggle between Current Hiring and Past Hiring views
         function toggleView() {
             const currentIndex = viewOrder.indexOf(currentView);
             const nextIndex = (currentIndex + 1) % viewOrder.length;
@@ -1879,30 +1799,43 @@
             const toggleBtn = document.getElementById('toggleViewBtn');
             toggleBtn.textContent = viewLabels[currentView];
             
+            renderCurrentView();
+        }
+
+        // Toggle between card and list display modes
+        function toggleDisplayMode() {
+            displayMode = displayMode === 'cards' ? 'list' : 'cards';
+            
+            // Update button label
+            const toggleBtn = document.getElementById('toggleDisplayBtn');
+            toggleBtn.textContent = displayMode === 'cards' ? '📋 Card View' : '📋 List View';
+            
+            renderCurrentView();
+        }
+
+        // Render the current view with the current display mode
+        function renderCurrentView() {
             // Hide all views
-            document.getElementById('pipelineView').style.display = 'none';
             document.getElementById('currentHiringView').style.display = 'none';
             document.getElementById('pastHiringView').style.display = 'none';
             document.getElementById('listView').style.display = 'none';
             
-            // Show current view
-            switch(currentView) {
-                case 'pipeline':
-                    document.getElementById('pipelineView').style.display = 'flex';
-                    renderPipelineView();
-                    break;
-                case 'currentHiring':
-                    document.getElementById('currentHiringView').style.display = 'flex';
-                    renderCurrentHiringView();
-                    break;
-                case 'pastHiring':
-                    document.getElementById('pastHiringView').style.display = 'flex';
-                    renderPastHiringView();
-                    break;
-                case 'list':
-                    document.getElementById('listView').style.display = 'block';
-                    renderListView();
-                    break;
+            if (displayMode === 'cards') {
+                // Show card view
+                switch(currentView) {
+                    case 'currentHiring':
+                        document.getElementById('currentHiringView').style.display = 'flex';
+                        renderCurrentHiringView();
+                        break;
+                    case 'pastHiring':
+                        document.getElementById('pastHiringView').style.display = 'flex';
+                        renderPastHiringView();
+                        break;
+                }
+            } else {
+                // Show list view
+                document.getElementById('listView').style.display = 'block';
+                renderListView();
             }
         }
 
@@ -2037,16 +1970,10 @@
                 }
                 
                 // Update the dashboard counts based on current view
-                switch(currentView) {
-                    case 'pipeline':
-                        updateColumnCounts();
-                        break;
-                    case 'currentHiring':
-                        updateCurrentHiringColumnCounts();
-                        break;
-                    case 'pastHiring':
-                        updatePastHiringColumnCounts();
-                        break;
+                if (currentView === 'currentHiring') {
+                    updateCurrentHiringColumnCounts();
+                } else if (currentView === 'pastHiring') {
+                    updatePastHiringColumnCounts();
                 }
                 
                 // Update the actual MD file
@@ -2071,6 +1998,8 @@
                 return 'Regional VP';
             } else if (columnTitle.includes('Panel Stage')) {
                 return 'Panel Stage';
+            } else if (columnTitle.includes('Offer Stage')) {
+                return 'Offer Stage';
             } 
             // Past Hiring View statuses
             else if (columnTitle.includes('Not Hired - Positive')) {
@@ -2079,16 +2008,8 @@
                 return 'Not Hired - Negative';
             } else if (columnTitle.includes('Not Hired') && !columnTitle.includes('Positive') && !columnTitle.includes('Negative')) {
                 return 'Not Hired';
-            }
-            // Pipeline View statuses
-            else if (columnTitle.includes('Recent Interviews')) {
-                return 'Recent Interview - Pending';
-            } else if (columnTitle.includes('Offer Stage')) {
-                return 'Offer Stage';
             } else if (columnTitle.includes('Hired') && !columnTitle.includes('Not Hired')) {
                 return 'Hired';
-            } else if (columnTitle.includes('Not Hired - Previous')) {
-                return 'Not Hired - Previous Cycle';
             }
             
             return 'Unknown';
@@ -2333,8 +2254,63 @@
             }
         }
 
+        // Hire a candidate from offer stage
+        function hireCandidateFromOffer(candidateName) {
+            const candidate = allCandidates.find(c => c.name === candidateName);
+            if (candidate) {
+                // Update candidate status
+                updateCandidateStatus(candidateName, 'Hired');
+                
+                // Update the actual MD file
+                updateCandidateFile(candidateName, 'Hired');
+                
+                // Auto-save candidates.json
+                autoSaveCandidatesJson();
+                
+                // Refresh the current view
+                renderCurrentView();
+                
+                showNotification(`✅ ${candidateName} has been hired!`, 'success');
+            }
+        }
+
+        // Discard a candidate from offer stage
+        function discardCandidateFromOffer(candidateName) {
+            const candidate = allCandidates.find(c => c.name === candidateName);
+            if (candidate) {
+                // Update candidate status
+                updateCandidateStatus(candidateName, 'Not Hired');
+                
+                // Update the actual MD file
+                updateCandidateFile(candidateName, 'Not Hired');
+                
+                // Auto-save candidates.json
+                autoSaveCandidatesJson();
+                
+                // Refresh the current view
+                renderCurrentView();
+                
+                showNotification(`❌ ${candidateName} has been moved to Not Hired`, 'info');
+            }
+        }
+
         function moveToOffer(candidateName) {
-            alert(`Moving ${candidateName} to Offer Stage...`);
+            const candidate = allCandidates.find(c => c.name === candidateName);
+            if (candidate) {
+                // Update candidate status
+                updateCandidateStatus(candidateName, 'Offer Stage');
+                
+                // Update the actual MD file
+                updateCandidateFile(candidateName, 'Offer Stage');
+                
+                // Auto-save candidates.json
+                autoSaveCandidatesJson();
+                
+                // Refresh the current view
+                renderCurrentView();
+                
+                showNotification(`💼 ${candidateName} moved to Offer Stage`, 'success');
+            }
         }
 
         function scheduleFollowup(candidateName) {
