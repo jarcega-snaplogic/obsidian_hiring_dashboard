@@ -540,7 +540,7 @@
 
 
         <!-- Current Hiring View -->
-        <div class="pipeline-container" id="currentHiringView" style="display: none;">
+        <div class="pipeline-container" id="currentHiringView" style="display: flex;">
             <div class="pipeline-column">
                 <div class="column-header">
                     <span class="column-title">👔 Hiring Manager</span>
@@ -699,12 +699,14 @@
 
         // Show connection prompt and disable dashboard
         function showConnectionPrompt() {
-            const pipelineView = document.getElementById('pipelineView');
+            const currentHiringView = document.getElementById('currentHiringView');
+            const pastHiringView = document.getElementById('pastHiringView');
             const listView = document.getElementById('listView');
             
             // Hide normal dashboard content
-            pipelineView.style.display = 'none';
-            listView.style.display = 'none';
+            if (currentHiringView) currentHiringView.style.display = 'none';
+            if (pastHiringView) pastHiringView.style.display = 'none';
+            if (listView) listView.style.display = 'none';
             
             // Create connection prompt
             const promptDiv = document.createElement('div');
@@ -1426,12 +1428,12 @@
         function initializeDashboard() {
             console.log('Initializing dashboard - waiting for folder connection');
             
-            // Show connection prompt since we start with no data
-            showConnectionPrompt();
-            
-            // Set up empty dashboard
+            // Set up empty dashboard first
             updateStats();
             setupEventListeners();
+            
+            // Show connection prompt since we start with no data
+            showConnectionPrompt();
             
             // Check File System Access API support
             if (!isFileSystemAccessSupported) {
@@ -1439,42 +1441,6 @@
             }
         }
 
-        // Render pipeline view
-        function renderPipelineView() {
-            const recentList = document.getElementById('recentList');
-            const offerList = document.getElementById('offerList');
-            const hiredList = document.getElementById('hiredList');
-            const notHiredNegativeList = document.getElementById('notHiredNegativeList');
-            const notHiredList = document.getElementById('notHiredList');
-
-            // Clear existing content and setup drop zones
-            [recentList, offerList, hiredList, notHiredNegativeList, notHiredList].forEach(list => {
-                list.innerHTML = '';
-                // Set up drop zone on the entire column instead of just the candidate list
-                const column = list.closest('.pipeline-column');
-                if (column) {
-                    setupDropZone(column);
-                }
-            });
-
-            filteredCandidates.forEach(candidate => {
-                const candidateCard = createCandidateCard(candidate);
-                
-                if (candidate.status === 'Recent Interview - Pending') {
-                    recentList.appendChild(candidateCard);
-                } else if (candidate.status === 'Offer Stage') {
-                    offerList.appendChild(candidateCard);
-                } else if (candidate.status === 'Hired') {
-                    hiredList.appendChild(candidateCard);
-                } else if (candidate.status === 'Not Hired - Negative') {
-                    notHiredNegativeList.appendChild(candidateCard);
-                } else if (candidate.status === 'Not Hired - Previous Cycle' || candidate.status === 'Unknown') {
-                    notHiredList.appendChild(candidateCard);
-                }
-            });
-
-            updateColumnCounts();
-        }
 
         // Create candidate card
         function createCandidateCard(candidate) {
@@ -1653,22 +1619,6 @@
             document.getElementById('pastNotHiredNegativeCount').textContent = counts.pastNotHiredNegative;
         }
 
-        // Update column counts for pipeline view
-        function updateColumnCounts() {
-            const counts = {
-                recent: filteredCandidates.filter(c => c.status === 'Recent Interview - Pending').length,
-                offer: filteredCandidates.filter(c => c.status === 'Offer Stage').length,
-                hired: filteredCandidates.filter(c => c.status === 'Hired').length,
-                notHiredNegative: filteredCandidates.filter(c => c.status === 'Not Hired - Negative').length,
-                notHired: filteredCandidates.filter(c => c.status === 'Not Hired - Previous Cycle' || c.status === 'Unknown').length
-            };
-
-            document.getElementById('recentCount').textContent = counts.recent;
-            document.getElementById('offerCount').textContent = counts.offer;
-            document.getElementById('hiredCount').textContent = counts.hired;
-            document.getElementById('notHiredNegativeCount').textContent = counts.notHiredNegative;
-            document.getElementById('notHiredCount').textContent = counts.notHired;
-        }
 
         // Update dashboard stats
         function updateStats() {
