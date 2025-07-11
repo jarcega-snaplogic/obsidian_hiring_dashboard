@@ -444,6 +444,126 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
 
+        /* Sentiment color coding */
+        .sentiment-1 { background: linear-gradient(135deg, #ffebee, #ffcdd2); border-left-color: #f44336; }
+        .sentiment-2 { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border-left-color: #ff9800; }
+        .sentiment-3 { background: white; border-left-color: #3498db; }
+        .sentiment-4 { background: linear-gradient(135deg, #e8f5e8, #c8e6c9); border-left-color: #4caf50; }
+        .sentiment-5 { background: linear-gradient(135deg, #e0f2f1, #b2dfdb); border-left-color: #00bcd4; }
+
+        .sentiment-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 4px 0;
+        }
+
+        .sentiment-btn {
+            background: none;
+            border: 2px solid #e0e0e0;
+            border-radius: 20px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14px;
+        }
+
+        .sentiment-btn:hover {
+            transform: scale(1.1);
+            border-color: #3498db;
+        }
+
+        .sentiment-btn.positive:hover {
+            background: #4caf50;
+            border-color: #4caf50;
+            color: white;
+        }
+
+        .sentiment-btn.negative:hover {
+            background: #f44336;
+            border-color: #f44336;
+            color: white;
+        }
+
+        .sentiment-value {
+            font-weight: bold;
+            font-size: 16px;
+            color: #2c3e50;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .sentiment-display {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .sentiment-stars {
+            display: inline-flex;
+            gap: 1px;
+        }
+
+        .sentiment-star {
+            width: 12px;
+            height: 12px;
+            background: #ddd;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .sentiment-star.filled {
+            background: #ffc107;
+        }
+
+        .sentiment-controls {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .sentiment-btn {
+            padding: 4px 8px;
+            border: none;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+        }
+
+        .sentiment-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .sentiment-btn.positive {
+            background: #4caf50;
+            color: white;
+        }
+
+        .sentiment-btn.negative {
+            background: #f44336;
+            color: white;
+        }
+
+        .sentiment-btn.discard {
+            background: #9e9e9e;
+            color: white;
+        }
+
+        .sentiment-btn.hire {
+            background: #2196f3;
+            color: white;
+        }
+
         @media (max-width: 768px) {
             .pipeline-container {
                 flex-direction: column;
@@ -1244,6 +1364,10 @@
                     candidate.tags = [];
                 }
 
+                // Add sentiment field (default to 3 if not found)
+                const sentimentMatch = content.match(/\*\*Sentiment:\*\*\s*(\d+)/i);
+                candidate.sentiment = sentimentMatch ? parseInt(sentimentMatch[1]) : 3;
+
                 return candidate;
 
             } catch (error) {
@@ -1458,21 +1582,34 @@
             card.addEventListener('dragstart', handleDragStart);
             card.addEventListener('dragend', handleDragEnd);
 
+            // Add sentiment-based color coding
+            const sentiment = candidate.sentiment || 3;
+            card.classList.add(`sentiment-${sentiment}`);
+
             const regionClass = candidate.region ? candidate.region.toLowerCase().replace(' ', '-') : 'unknown';
             
-            // Special actions for Offer Stage candidates
+            // Sentiment controls and action buttons
             let actionButtons = '';
             if (candidate.status === 'Offer Stage') {
                 actionButtons = `
                     <button class="action-btn btn-primary" onclick="event.stopPropagation(); openInObsidian('${candidate.name}')">📝 Notes</button>
+                    <div class="sentiment-controls">
+                        <button class="sentiment-btn negative" onclick="event.stopPropagation(); decreaseSentiment('${candidate.name}')">👎</button>
+                        <span class="sentiment-value">${sentiment}</span>
+                        <button class="sentiment-btn positive" onclick="event.stopPropagation(); increaseSentiment('${candidate.name}')">👍</button>
+                    </div>
                     <button class="action-btn btn-success" onclick="event.stopPropagation(); hireCandidateFromOffer('${candidate.name}')">✅ Hire</button>
                     <button class="action-btn btn-danger" onclick="event.stopPropagation(); discardCandidateFromOffer('${candidate.name}')">❌ Discard</button>
                 `;
             } else {
                 actionButtons = `
                     <button class="action-btn btn-primary" onclick="event.stopPropagation(); openInObsidian('${candidate.name}')">📝 Notes</button>
-                    <button class="action-btn btn-success" onclick="event.stopPropagation(); moveToOffer('${candidate.name}')">💼 Offer</button>
-                    <button class="action-btn btn-warning" onclick="event.stopPropagation(); scheduleFollowup('${candidate.name}')">📅 Follow-up</button>
+                    <div class="sentiment-controls">
+                        <button class="sentiment-btn negative" onclick="event.stopPropagation(); decreaseSentiment('${candidate.name}')">👎</button>
+                        <span class="sentiment-value">${sentiment}</span>
+                        <button class="sentiment-btn positive" onclick="event.stopPropagation(); increaseSentiment('${candidate.name}')">👍</button>
+                    </div>
+                    <button class="action-btn btn-danger" onclick="event.stopPropagation(); discardCandidate('${candidate.name}')">❌ Discard</button>
                 `;
             }
             
@@ -2037,6 +2174,66 @@
             }
         }
 
+        // Update sentiment in candidate markdown file
+        async function updateCandidateSentiment(candidateName, newSentiment) {
+            if (!isConnectedToFolder || !hiringDirectoryHandle) {
+                console.log(`Sentiment updated for ${candidateName} to ${newSentiment} in dashboard only.`);
+                return false;
+            }
+
+            try {
+                // Find the candidate's MD file
+                const fileName = `${candidateName}.md`;
+                const fileHandle = await hiringDirectoryHandle.getFileHandle(fileName);
+                
+                // Read current file content
+                const file = await fileHandle.getFile();
+                const currentContent = await file.text();
+                
+                // Update the sentiment line using regex
+                const sentimentPattern = /(\*\*Sentiment:\*\*\s*)([^\n]+)/;
+                let updatedContent;
+                
+                if (sentimentPattern.test(currentContent)) {
+                    // Replace existing sentiment
+                    updatedContent = currentContent.replace(sentimentPattern, `$1${newSentiment}`);
+                } else {
+                    // If no sentiment field exists, add it after the status line
+                    const statusPattern = /(\*\*Status:\*\*\s*[^\n]+)/;
+                    if (statusPattern.test(currentContent)) {
+                        updatedContent = currentContent.replace(
+                            statusPattern,
+                            `$1\n**Sentiment:** ${newSentiment}`
+                        );
+                    } else {
+                        // Add sentiment after the name header if no status found
+                        const nameHeader = `# ${candidateName}`;
+                        if (currentContent.includes(nameHeader)) {
+                            updatedContent = currentContent.replace(
+                                nameHeader,
+                                `${nameHeader}\n\n**Sentiment:** ${newSentiment}`
+                            );
+                        } else {
+                            // Add sentiment at the beginning if no name header found
+                            updatedContent = `**Sentiment:** ${newSentiment}\n\n${currentContent}`;
+                        }
+                    }
+                }
+                
+                // Write the updated content back to the file
+                const writable = await fileHandle.createWritable();
+                await writable.write(updatedContent);
+                await writable.close();
+                
+                console.log(`Successfully updated ${fileName} with sentiment: ${newSentiment}`);
+                return true;
+                
+            } catch (error) {
+                console.error(`Error updating sentiment for ${candidateName}.md:`, error);
+                return false;
+            }
+        }
+
         // Action functions
         async function openInObsidian(candidateName) {
             if (!isConnectedToVault || !isConnectedToFolder || !vaultName) {
@@ -2228,11 +2425,23 @@
         function discardCandidateFromOffer(candidateName) {
             const candidate = allCandidates.find(c => c.name === candidateName);
             if (candidate) {
+                // Determine status based on sentiment
+                const sentiment = candidate.sentiment || 3;
+                let newStatus;
+                
+                if (sentiment >= 4) {
+                    newStatus = 'Not Hired - Positive';
+                } else if (sentiment <= 2) {
+                    newStatus = 'Not Hired - Negative';
+                } else {
+                    newStatus = 'Not Hired';
+                }
+                
                 // Update candidate status
-                updateCandidateStatus(candidateName, 'Not Hired');
+                updateCandidateStatus(candidateName, newStatus);
                 
                 // Update the actual MD file
-                updateCandidateFile(candidateName, 'Not Hired');
+                updateCandidateFile(candidateName, newStatus);
                 
                 // Auto-save candidates.json
                 autoSaveCandidatesJson();
@@ -2240,7 +2449,7 @@
                 // Refresh the current view
                 renderCurrentView();
                 
-                showNotification(`❌ ${candidateName} has been moved to Not Hired`, 'info');
+                showNotification(`❌ ${candidateName} has been moved to ${newStatus}`, 'info');
             }
         }
 
@@ -2265,6 +2474,95 @@
 
         function scheduleFollowup(candidateName) {
             alert(`Scheduling follow-up for ${candidateName}...`);
+        }
+
+        // Sentiment control functions
+        function increaseSentiment(candidateName) {
+            const candidate = allCandidates.find(c => c.name === candidateName);
+            if (candidate) {
+                const currentSentiment = candidate.sentiment || 3;
+                const newSentiment = Math.min(5, currentSentiment + 1);
+                
+                // Update sentiment in candidate data
+                candidate.sentiment = newSentiment;
+                
+                // Update in filteredCandidates as well
+                const filteredCandidate = filteredCandidates.find(c => c.name === candidateName);
+                if (filteredCandidate) {
+                    filteredCandidate.sentiment = newSentiment;
+                }
+                
+                // Update sentiment in markdown file
+                updateCandidateSentiment(candidateName, newSentiment);
+                
+                // Auto-save candidates.json
+                autoSaveCandidatesJson();
+                
+                // Refresh the current view to update colors and display
+                renderCurrentView();
+                
+                showNotification(`👍 ${candidateName} sentiment increased to ${newSentiment}`, 'success');
+            }
+        }
+
+        function decreaseSentiment(candidateName) {
+            const candidate = allCandidates.find(c => c.name === candidateName);
+            if (candidate) {
+                const currentSentiment = candidate.sentiment || 3;
+                const newSentiment = Math.max(1, currentSentiment - 1);
+                
+                // Update sentiment in candidate data
+                candidate.sentiment = newSentiment;
+                
+                // Update in filteredCandidates as well
+                const filteredCandidate = filteredCandidates.find(c => c.name === candidateName);
+                if (filteredCandidate) {
+                    filteredCandidate.sentiment = newSentiment;
+                }
+                
+                // Update sentiment in markdown file
+                updateCandidateSentiment(candidateName, newSentiment);
+                
+                // Auto-save candidates.json
+                autoSaveCandidatesJson();
+                
+                // Refresh the current view to update colors and display
+                renderCurrentView();
+                
+                showNotification(`👎 ${candidateName} sentiment decreased to ${newSentiment}`, 'info');
+            }
+        }
+
+        // General discard function (for non-offer candidates)
+        function discardCandidate(candidateName) {
+            const candidate = allCandidates.find(c => c.name === candidateName);
+            if (candidate) {
+                // Determine status based on sentiment
+                const sentiment = candidate.sentiment || 3;
+                let newStatus;
+                
+                if (sentiment >= 4) {
+                    newStatus = 'Not Hired - Positive';
+                } else if (sentiment <= 2) {
+                    newStatus = 'Not Hired - Negative';
+                } else {
+                    newStatus = 'Not Hired';
+                }
+                
+                // Update candidate status
+                updateCandidateStatus(candidateName, newStatus);
+                
+                // Update the actual MD file
+                updateCandidateFile(candidateName, newStatus);
+                
+                // Auto-save candidates.json
+                autoSaveCandidatesJson();
+                
+                // Refresh the current view
+                renderCurrentView();
+                
+                showNotification(`❌ ${candidateName} has been moved to ${newStatus}`, 'info');
+            }
         }
 
         // Export functions
