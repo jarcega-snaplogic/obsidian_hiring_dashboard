@@ -513,9 +513,15 @@
                 
                 <select class="filter-select" id="statusFilter">
                     <option value="">All Status</option>
+                    <option value="Hiring Manager">Hiring Manager</option>
+                    <option value="SME">SME</option>
+                    <option value="Regional VP">Regional VP</option>
+                    <option value="Panel Stage">Panel Stage</option>
                     <option value="Recent Interview - Pending">Recent Pending</option>
                     <option value="Offer Stage">Offer Stage</option>
                     <option value="Hired">Hired</option>
+                    <option value="Not Hired">Not Hired</option>
+                    <option value="Not Hired - Positive">Not Hired - Positive</option>
                     <option value="Not Hired - Negative">Not Hired - Negative</option>
                     <option value="Not Hired - Previous Cycle">Previous Cycle</option>
                 </select>
@@ -527,7 +533,7 @@
                 <button class="filter-btn" onclick="showQuickFilter('this-week')">This Week</button>
             </div>
 
-            <button class="toggle-view-btn" onclick="toggleView()">📊 Toggle View</button>
+            <button class="toggle-view-btn" onclick="toggleView()" id="toggleViewBtn">📊 Pipeline View</button>
             <button class="toggle-view-btn" onclick="refreshDataFromFiles()" id="refreshDataBtn">🔄 Refresh Data</button>
         </div>
 
@@ -584,8 +590,104 @@
             </div>
         </div>
 
+        <!-- Current Hiring View -->
+        <div class="pipeline-container" id="currentHiringView" style="display: none;">
+            <div class="pipeline-column">
+                <div class="column-header">
+                    <span class="column-title">👔 Hiring Manager</span>
+                    <span class="column-count" id="hiringManagerCount">0</span>
+                </div>
+                <div class="candidate-list" id="hiringManagerList">
+                    <!-- Hiring Manager candidates will be populated here -->
+                </div>
+            </div>
+
+            <div class="pipeline-column">
+                <div class="column-header">
+                    <span class="column-title">🔧 SME</span>
+                    <span class="column-count" id="smeCount">0</span>
+                </div>
+                <div class="candidate-list" id="smeList">
+                    <!-- SME candidates -->
+                </div>
+            </div>
+
+            <div class="pipeline-column">
+                <div class="column-header">
+                    <span class="column-title">🏢 Regional VP</span>
+                    <span class="column-count" id="regionalVPCount">0</span>
+                </div>
+                <div class="candidate-list" id="regionalVPList">
+                    <!-- Regional VP candidates -->
+                </div>
+            </div>
+
+            <div class="pipeline-column">
+                <div class="column-header">
+                    <span class="column-title">👥 Panel Stage</span>
+                    <span class="column-count" id="panelStageCount">0</span>
+                </div>
+                <div class="candidate-list" id="panelStageList">
+                    <!-- Panel Stage candidates -->
+                </div>
+            </div>
+
+            <div class="pipeline-column">
+                <div class="column-header">
+                    <span class="column-title">💼 Offer Stage</span>
+                    <span class="column-count" id="currentOfferCount">0</span>
+                </div>
+                <div class="candidate-list" id="currentOfferList">
+                    <!-- Offer Stage candidates -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Past Hiring View -->
+        <div class="pipeline-container" id="pastHiringView" style="display: none;">
+            <div class="pipeline-column">
+                <div class="column-header">
+                    <span class="column-title">💼 Offer Stage</span>
+                    <span class="column-count" id="pastOfferCount">0</span>
+                </div>
+                <div class="candidate-list" id="pastOfferList">
+                    <!-- Past Offer Stage candidates -->
+                </div>
+            </div>
+
+            <div class="pipeline-column">
+                <div class="column-header">
+                    <span class="column-title">❌ Not Hired</span>
+                    <span class="column-count" id="notHiredGeneralCount">0</span>
+                </div>
+                <div class="candidate-list" id="notHiredGeneralList">
+                    <!-- Not Hired candidates -->
+                </div>
+            </div>
+
+            <div class="pipeline-column">
+                <div class="column-header">
+                    <span class="column-title">✅ Not Hired - Positive</span>
+                    <span class="column-count" id="notHiredPositiveCount">0</span>
+                </div>
+                <div class="candidate-list" id="notHiredPositiveList">
+                    <!-- Not Hired - Positive candidates -->
+                </div>
+            </div>
+
+            <div class="pipeline-column">
+                <div class="column-header">
+                    <span class="column-title">⭕ Not Hired - Negative</span>
+                    <span class="column-count" id="pastNotHiredNegativeCount">0</span>
+                </div>
+                <div class="candidate-list" id="pastNotHiredNegativeList">
+                    <!-- Not Hired - Negative candidates -->
+                </div>
+            </div>
+        </div>
+
         <!-- List View -->
-        <div class="list-view" id="listView">
+        <div class="list-view" id="listView" style="display: none;">
             <h3 style="margin-bottom: 20px;">📋 Candidates List View</h3>
             <table class="candidate-table">
                 <thead>
@@ -637,6 +739,13 @@
         let allCandidates = [];
         let filteredCandidates = [];
         let currentView = 'pipeline';
+        const viewOrder = ['pipeline', 'currentHiring', 'pastHiring', 'list'];
+        const viewLabels = {
+            'pipeline': '📊 Pipeline View',
+            'currentHiring': '🔥 Current Hiring',
+            'pastHiring': '📋 Past Hiring',
+            'list': '📋 List View'
+        };
 
         // No embedded data - everything loads from connected folder
 
@@ -1484,7 +1593,108 @@
             });
         }
 
-        // Update column counts
+        // Render current hiring view
+        function renderCurrentHiringView() {
+            const hiringManagerList = document.getElementById('hiringManagerList');
+            const smeList = document.getElementById('smeList');
+            const regionalVPList = document.getElementById('regionalVPList');
+            const panelStageList = document.getElementById('panelStageList');
+            const currentOfferList = document.getElementById('currentOfferList');
+
+            // Clear existing content and setup drop zones
+            [hiringManagerList, smeList, regionalVPList, panelStageList, currentOfferList].forEach(list => {
+                list.innerHTML = '';
+                const column = list.closest('.pipeline-column');
+                if (column) {
+                    setupDropZone(column);
+                }
+            });
+
+            filteredCandidates.forEach(candidate => {
+                const candidateCard = createCandidateCard(candidate);
+                
+                if (candidate.status === 'Hiring Manager') {
+                    hiringManagerList.appendChild(candidateCard);
+                } else if (candidate.status === 'SME') {
+                    smeList.appendChild(candidateCard);
+                } else if (candidate.status === 'Regional VP') {
+                    regionalVPList.appendChild(candidateCard);
+                } else if (candidate.status === 'Panel Stage') {
+                    panelStageList.appendChild(candidateCard);
+                } else if (candidate.status === 'Offer Stage') {
+                    currentOfferList.appendChild(candidateCard);
+                }
+            });
+
+            updateCurrentHiringColumnCounts();
+        }
+
+        // Render past hiring view
+        function renderPastHiringView() {
+            const pastOfferList = document.getElementById('pastOfferList');
+            const notHiredGeneralList = document.getElementById('notHiredGeneralList');
+            const notHiredPositiveList = document.getElementById('notHiredPositiveList');
+            const pastNotHiredNegativeList = document.getElementById('pastNotHiredNegativeList');
+
+            // Clear existing content and setup drop zones
+            [pastOfferList, notHiredGeneralList, notHiredPositiveList, pastNotHiredNegativeList].forEach(list => {
+                list.innerHTML = '';
+                const column = list.closest('.pipeline-column');
+                if (column) {
+                    setupDropZone(column);
+                }
+            });
+
+            filteredCandidates.forEach(candidate => {
+                const candidateCard = createCandidateCard(candidate);
+                
+                if (candidate.status === 'Offer Stage' || candidate.status === 'Hired') {
+                    pastOfferList.appendChild(candidateCard);
+                } else if (candidate.status === 'Not Hired') {
+                    notHiredGeneralList.appendChild(candidateCard);
+                } else if (candidate.status === 'Not Hired - Positive') {
+                    notHiredPositiveList.appendChild(candidateCard);
+                } else if (candidate.status === 'Not Hired - Negative') {
+                    pastNotHiredNegativeList.appendChild(candidateCard);
+                }
+            });
+
+            updatePastHiringColumnCounts();
+        }
+
+        // Update column counts for current hiring view
+        function updateCurrentHiringColumnCounts() {
+            const counts = {
+                hiringManager: filteredCandidates.filter(c => c.status === 'Hiring Manager').length,
+                sme: filteredCandidates.filter(c => c.status === 'SME').length,
+                regionalVP: filteredCandidates.filter(c => c.status === 'Regional VP').length,
+                panelStage: filteredCandidates.filter(c => c.status === 'Panel Stage').length,
+                currentOffer: filteredCandidates.filter(c => c.status === 'Offer Stage').length
+            };
+
+            document.getElementById('hiringManagerCount').textContent = counts.hiringManager;
+            document.getElementById('smeCount').textContent = counts.sme;
+            document.getElementById('regionalVPCount').textContent = counts.regionalVP;
+            document.getElementById('panelStageCount').textContent = counts.panelStage;
+            document.getElementById('currentOfferCount').textContent = counts.currentOffer;
+        }
+
+        // Update column counts for past hiring view
+        function updatePastHiringColumnCounts() {
+            const counts = {
+                pastOffer: filteredCandidates.filter(c => c.status === 'Offer Stage' || c.status === 'Hired').length,
+                notHiredGeneral: filteredCandidates.filter(c => c.status === 'Not Hired').length,
+                notHiredPositive: filteredCandidates.filter(c => c.status === 'Not Hired - Positive').length,
+                pastNotHiredNegative: filteredCandidates.filter(c => c.status === 'Not Hired - Negative').length
+            };
+
+            document.getElementById('pastOfferCount').textContent = counts.pastOffer;
+            document.getElementById('notHiredGeneralCount').textContent = counts.notHiredGeneral;
+            document.getElementById('notHiredPositiveCount').textContent = counts.notHiredPositive;
+            document.getElementById('pastNotHiredNegativeCount').textContent = counts.pastNotHiredNegative;
+        }
+
+        // Update column counts for pipeline view
         function updateColumnCounts() {
             const counts = {
                 recent: filteredCandidates.filter(c => c.status === 'Recent Interview - Pending').length,
@@ -1591,10 +1801,19 @@
                 return matchesSearch && matchesRegion && matchesPosition && matchesStatus;
             });
 
-            if (currentView === 'pipeline') {
-                renderPipelineView();
-            } else {
-                renderListView();
+            switch(currentView) {
+                case 'pipeline':
+                    renderPipelineView();
+                    break;
+                case 'currentHiring':
+                    renderCurrentHiringView();
+                    break;
+                case 'pastHiring':
+                    renderPastHiringView();
+                    break;
+                case 'list':
+                    renderListView();
+                    break;
             }
         }
 
@@ -1612,10 +1831,19 @@
                 case 'high-priority':
                     filteredCandidates = allCandidates.filter(c => 
                         c.rating && (c.rating.includes('4') || c.rating.includes('5')));
-                    if (currentView === 'pipeline') {
-                        renderPipelineView();
-                    } else {
-                        renderListView();
+                    switch(currentView) {
+                        case 'pipeline':
+                            renderPipelineView();
+                            break;
+                        case 'currentHiring':
+                            renderCurrentHiringView();
+                            break;
+                        case 'pastHiring':
+                            renderPastHiringView();
+                            break;
+                        case 'list':
+                            renderListView();
+                            break;
                     }
                     break;
                 case 'this-week':
@@ -1623,28 +1851,58 @@
                     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
                     filteredCandidates = allCandidates.filter(c => 
                         c.date && new Date(c.date) >= oneWeekAgo);
-                    if (currentView === 'pipeline') {
-                        renderPipelineView();
-                    } else {
-                        renderListView();
+                    switch(currentView) {
+                        case 'pipeline':
+                            renderPipelineView();
+                            break;
+                        case 'currentHiring':
+                            renderCurrentHiringView();
+                            break;
+                        case 'pastHiring':
+                            renderPastHiringView();
+                            break;
+                        case 'list':
+                            renderListView();
+                            break;
                     }
                     break;
             }
         }
 
-        // Toggle between pipeline and list view
+        // Toggle between all 4 views
         function toggleView() {
-            currentView = currentView === 'pipeline' ? 'list' : 'pipeline';
+            const currentIndex = viewOrder.indexOf(currentView);
+            const nextIndex = (currentIndex + 1) % viewOrder.length;
+            currentView = viewOrder[nextIndex];
             
-            const pipelineView = document.getElementById('pipelineView');
-            const listView = document.getElementById('listView');
+            // Update button label
+            const toggleBtn = document.getElementById('toggleViewBtn');
+            toggleBtn.textContent = viewLabels[currentView];
             
-            if (currentView === 'pipeline') {
-                pipelineView.style.display = 'flex';
-                listView.style.display = 'none';
-            } else {
-                pipelineView.style.display = 'none';
-                listView.style.display = 'block';
+            // Hide all views
+            document.getElementById('pipelineView').style.display = 'none';
+            document.getElementById('currentHiringView').style.display = 'none';
+            document.getElementById('pastHiringView').style.display = 'none';
+            document.getElementById('listView').style.display = 'none';
+            
+            // Show current view
+            switch(currentView) {
+                case 'pipeline':
+                    document.getElementById('pipelineView').style.display = 'flex';
+                    renderPipelineView();
+                    break;
+                case 'currentHiring':
+                    document.getElementById('currentHiringView').style.display = 'flex';
+                    renderCurrentHiringView();
+                    break;
+                case 'pastHiring':
+                    document.getElementById('pastHiringView').style.display = 'flex';
+                    renderPastHiringView();
+                    break;
+                case 'list':
+                    document.getElementById('listView').style.display = 'block';
+                    renderListView();
+                    break;
             }
         }
 
@@ -1778,8 +2036,18 @@
                     console.error('Could not find candidate list in column');
                 }
                 
-                // Update the dashboard
-                updateColumnCounts();
+                // Update the dashboard counts based on current view
+                switch(currentView) {
+                    case 'pipeline':
+                        updateColumnCounts();
+                        break;
+                    case 'currentHiring':
+                        updateCurrentHiringColumnCounts();
+                        break;
+                    case 'pastHiring':
+                        updatePastHiringColumnCounts();
+                        break;
+                }
                 
                 // Update the actual MD file
                 updateCandidateFile(candidateName, newStatus);
@@ -1794,14 +2062,31 @@
         function getStatusFromColumn(column) {
             const columnTitle = column.querySelector('.column-title').textContent;
             
-            if (columnTitle.includes('Recent Interviews')) {
+            // Current Hiring View statuses
+            if (columnTitle.includes('Hiring Manager')) {
+                return 'Hiring Manager';
+            } else if (columnTitle.includes('SME')) {
+                return 'SME';
+            } else if (columnTitle.includes('Regional VP')) {
+                return 'Regional VP';
+            } else if (columnTitle.includes('Panel Stage')) {
+                return 'Panel Stage';
+            } 
+            // Past Hiring View statuses
+            else if (columnTitle.includes('Not Hired - Positive')) {
+                return 'Not Hired - Positive';
+            } else if (columnTitle.includes('Not Hired - Negative')) {
+                return 'Not Hired - Negative';
+            } else if (columnTitle.includes('Not Hired') && !columnTitle.includes('Positive') && !columnTitle.includes('Negative')) {
+                return 'Not Hired';
+            }
+            // Pipeline View statuses
+            else if (columnTitle.includes('Recent Interviews')) {
                 return 'Recent Interview - Pending';
             } else if (columnTitle.includes('Offer Stage')) {
                 return 'Offer Stage';
             } else if (columnTitle.includes('Hired') && !columnTitle.includes('Not Hired')) {
                 return 'Hired';
-            } else if (columnTitle.includes('Not Hired - Negative')) {
-                return 'Not Hired - Negative';
             } else if (columnTitle.includes('Not Hired - Previous')) {
                 return 'Not Hired - Previous Cycle';
             }
