@@ -85,25 +85,25 @@
       "sentiment": 3
     },
     {
-      "name": "Vernon presentation",
-      "status": "Not Hired",
+      "name": "Julien Deloménie",
+      "status": "Not Hired - Negative",
       "date": "Date not found",
       "position": "Sales Engineer",
-      "region": "EMEA",
+      "region": "APAC",
       "rating": "TBD",
       "location": "Unknown",
-      "linkedin": "",
+      "linkedin": "https://www.linkedin.com/in/jdelomenie/",
       "email": "",
-      "phone": "---",
+      "phone": "",
       "experience": "Sales Engineer",
-      "notes": "No additional notes",
+      "notes": "Grosse experience Citizen development | Qualities: Good capacity to mix technology, communication skill, build a good story\nFind ne...",
       "tags": [
         "hiring",
         "candidate",
-        "emea",
+        "apac",
         "not-hired"
       ],
-      "sentiment": 3
+      "sentiment": 1
     },
     {
       "name": "Neil Cremin presentation",
@@ -127,6 +127,27 @@
       "sentiment": 3
     },
     {
+      "name": "Vernon presentation",
+      "status": "Not Hired",
+      "date": "Date not found",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "Unknown",
+      "linkedin": "",
+      "email": "",
+      "phone": "---",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
       "name": "Roland Rammal presentation",
       "status": "Not Hired",
       "date": "2022-04-21",
@@ -137,27 +158,6 @@
       "linkedin": "",
       "email": "",
       "phone": "2022-04-21",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "unassigned",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Chris Coft-White presentation",
-      "status": "Not Hired",
-      "date": "2022-04-25",
-      "position": "Sales Engineer",
-      "region": "UNKNOWN",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "",
-      "email": "",
-      "phone": "2022-04-25",
       "experience": "Sales Engineer",
       "notes": "No additional notes",
       "tags": [
@@ -190,25 +190,25 @@
       "sentiment": 3
     },
     {
-      "name": "Julien Deloménie",
-      "status": "Not Hired - Negative",
-      "date": "Date not found",
+      "name": "Chris Coft-White presentation",
+      "status": "Not Hired",
+      "date": "2022-04-25",
       "position": "Sales Engineer",
-      "region": "APAC",
+      "region": "UNKNOWN",
       "rating": "TBD",
       "location": "Unknown",
-      "linkedin": "https://www.linkedin.com/in/jdelomenie/",
+      "linkedin": "",
       "email": "",
-      "phone": "",
+      "phone": "2022-04-25",
       "experience": "Sales Engineer",
-      "notes": "Grosse experience Citizen development | Qualities: Good capacity to mix technology, communication skill, build a good story\nFind ne...",
+      "notes": "No additional notes",
       "tags": [
         "hiring",
         "candidate",
-        "apac",
+        "unassigned",
         "not-hired"
       ],
-      "sentiment": 1
+      "sentiment": 3
     },
     {
       "name": "2 - Process",
@@ -290,6 +290,27 @@
       "sentiment": 3
     },
     {
+      "name": "Manon 2",
+      "status": "Hired",
+      "date": "2022-05-03",
+      "position": "Sales Engineer",
+      "region": "UNKNOWN",
+      "rating": "TBD",
+      "location": "Unknown",
+      "linkedin": "",
+      "email": "",
+      "phone": "2022-05-03",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
+      "tags": [
+        "hiring",
+        "candidate",
+        "unassigned",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
       "name": "George Von Bulow",
       "status": "Not Hired",
       "date": "2022-05-04",
@@ -311,16 +332,16 @@
       "sentiment": 3
     },
     {
-      "name": "Manon 2",
+      "name": "Manon 3",
       "status": "Hired",
-      "date": "2022-05-03",
+      "date": "2022-05-04",
       "position": "Sales Engineer",
       "region": "UNKNOWN",
       "rating": "TBD",
       "location": "Unknown",
       "linkedin": "",
       "email": "",
-      "phone": "2022-05-03",
+      "phone": "2022-05-04",
       "experience": "Sales Engineer",
       "notes": "No additional notes",
       "tags": [
@@ -348,27 +369,6 @@
         "hiring",
         "candidate",
         "apac",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Manon 3",
-      "status": "Hired",
-      "date": "2022-05-04",
-      "position": "Sales Engineer",
-      "region": "UNKNOWN",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "",
-      "email": "",
-      "phone": "2022-05-04",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "unassigned",
         "not-hired"
       ],
       "sentiment": 3
@@ -521,27 +521,6 @@
       "sentiment": 3
     },
     {
-      "name": "Lars Drewianka",
-      "status": "Hired",
-      "date": "2022-07-04",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "",
-      "email": "",
-      "phone": "2022-07-04",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
       "name": "Markus Pentzek presentation",
       "status": "Hired",
       "date": "2022-07-07",
@@ -563,19 +542,24 @@
       "sentiment": 3
     },
     {
-      "name": "3 - Reconnect later",
-      "status": "Unknown",
-      "date": "Date not found",
+      "name": "Lars Drewianka",
+      "status": "Hired",
+      "date": "2022-07-04",
       "position": "Sales Engineer",
-      "region": "UNKNOWN",
+      "region": "EMEA",
       "rating": "TBD",
       "location": "Unknown",
-      "linkedin": "idrissa-diop/",
+      "linkedin": "",
       "email": "",
-      "phone": "",
+      "phone": "2022-07-04",
       "experience": "Sales Engineer",
       "notes": "No additional notes",
-      "tags": [],
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "not-hired"
+      ],
       "sentiment": 3
     },
     {
@@ -621,6 +605,22 @@
       "sentiment": 3
     },
     {
+      "name": "3 - Reconnect later",
+      "status": "Unknown",
+      "date": "Date not found",
+      "position": "Sales Engineer",
+      "region": "UNKNOWN",
+      "rating": "TBD",
+      "location": "Unknown",
+      "linkedin": "idrissa-diop/",
+      "email": "",
+      "phone": "",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
+      "tags": [],
+      "sentiment": 3
+    },
+    {
       "name": "Guicomo Correnti",
       "status": "Not Hired",
       "date": "Date not found",
@@ -663,22 +663,22 @@
       "sentiment": 3
     },
     {
-      "name": "Zanco Jaff",
+      "name": "Chris Garvey",
       "status": "Not Hired",
-      "date": "2022-09-27",
+      "date": "Date not found",
       "position": "Sales Engineer",
-      "region": "UNKNOWN",
+      "region": "EMEA",
       "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "**Location**",
+      "location": "UK",
+      "linkedin": "https://www.linkedin.com/in/chrismgarvey/?originalSubdomain=uk",
       "email": "",
-      "phone": "2022-09-27",
+      "phone": "20221003150526",
       "experience": "Sales Engineer",
-      "notes": "Like technology, like to tell stories about it lots of client experience at a stage of his life, wan...",
+      "notes": "Work across Europe, like that challenge is working from a distributor you have a lot of second hand ... | Qualities: Easy to get on with\nAdaptable, changeable\nGood at talking to people, at building...",
       "tags": [
         "hiring",
         "candidate",
-        "unassigned",
+        "emea",
         "not-hired"
       ],
       "sentiment": 3
@@ -705,22 +705,22 @@
       "sentiment": 3
     },
     {
-      "name": "Chris Garvey",
+      "name": "Zanco Jaff",
       "status": "Not Hired",
-      "date": "Date not found",
+      "date": "2022-09-27",
       "position": "Sales Engineer",
-      "region": "EMEA",
+      "region": "UNKNOWN",
       "rating": "TBD",
-      "location": "UK",
-      "linkedin": "https://www.linkedin.com/in/chrismgarvey/?originalSubdomain=uk",
+      "location": "Unknown",
+      "linkedin": "**Location**",
       "email": "",
-      "phone": "20221003150526",
+      "phone": "2022-09-27",
       "experience": "Sales Engineer",
-      "notes": "Work across Europe, like that challenge is working from a distributor you have a lot of second hand ... | Qualities: Easy to get on with\nAdaptable, changeable\nGood at talking to people, at building...",
+      "notes": "Like technology, like to tell stories about it lots of client experience at a stage of his life, wan...",
       "tags": [
         "hiring",
         "candidate",
-        "emea",
+        "unassigned",
         "not-hired"
       ],
       "sentiment": 3
@@ -738,6 +738,27 @@
       "phone": "20221003133402",
       "experience": "Javier",
       "notes": "Go way back with Javier pre-sales / data scientist background in ML/DS being made redundant unfortun... | Qualities: - Fast learner\n\t- technology\n- strong on communication\n\t- understand where probl...",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Lain Jones",
+      "status": "Not Hired",
+      "date": "Date not found",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "UK",
+      "linkedin": "https://www.linkedin.com/in/iainjones/",
+      "email": "",
+      "phone": "35\n\n---",
+      "experience": "Sales Engineer",
+      "notes": "\"I've things change dramatically, but in essence the task is the same\" ISV over recent past (1y) Sen... | Qualities: \"I care and I'm honest\"\nself-motivating...",
       "tags": [
         "hiring",
         "candidate",
@@ -838,27 +859,6 @@
       "phone": "2022-10-31",
       "experience": "Sales Engineer",
       "notes": "attracted by the phase the company's in good first take on the prospect: web based no code",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Lain Jones",
-      "status": "Not Hired",
-      "date": "Date not found",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "UK",
-      "linkedin": "https://www.linkedin.com/in/iainjones/",
-      "email": "",
-      "phone": "35\n\n---",
-      "experience": "Sales Engineer",
-      "notes": "\"I've things change dramatically, but in essence the task is the same\" ISV over recent past (1y) Sen... | Qualities: \"I care and I'm honest\"\nself-motivating...",
       "tags": [
         "hiring",
         "candidate",
@@ -1015,27 +1015,6 @@
       "sentiment": 3
     },
     {
-      "name": "Giorgio Dossena",
-      "status": "Not Hired",
-      "date": "2022-11-22",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "Milan",
-      "linkedin": "https://www.linkedin.com/in/giorgio-dossena/details/experience/",
-      "email": "",
-      "phone": "2022-11-22",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
       "name": "Roman Cipov",
       "status": "Not Hired",
       "date": "2022-11-23",
@@ -1048,6 +1027,27 @@
       "phone": "2022-11-23",
       "experience": "Slovakia",
       "notes": "T-shirt Moved from Slovakia to Frankfurt, used to work for a TIBCO partner, joined as consultant the... | Qualities: being there for the customer all the time, building relationship. Just be there...",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Giorgio Dossena",
+      "status": "Not Hired",
+      "date": "2022-11-22",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "Milan",
+      "linkedin": "https://www.linkedin.com/in/giorgio-dossena/details/experience/",
+      "email": "",
+      "phone": "2022-11-22",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
       "tags": [
         "hiring",
         "candidate",
@@ -1183,14 +1183,14 @@
       "sentiment": 3
     },
     {
-      "name": "Alessandro Raponi",
+      "name": "Andreas Heinzerling",
       "status": "Not Hired",
       "date": "2022-11-30",
       "position": "Sales Engineer",
       "region": "EMEA",
       "rating": "TBD",
       "location": "Unknown",
-      "linkedin": "",
+      "linkedin": "andreas-heinzerling-247485b1/",
       "email": "",
       "phone": "2022-11-30",
       "experience": "Sales Engineer",
@@ -1204,16 +1204,16 @@
       "sentiment": 3
     },
     {
-      "name": "Andreas Heinzerling",
+      "name": "Josef Koloncsak",
       "status": "Not Hired",
-      "date": "2022-11-30",
+      "date": "2022-12-02",
       "position": "Sales Engineer",
       "region": "EMEA",
       "rating": "TBD",
       "location": "Unknown",
-      "linkedin": "andreas-heinzerling-247485b1/",
+      "linkedin": "",
       "email": "",
-      "phone": "2022-11-30",
+      "phone": "2022-12-02",
       "experience": "Sales Engineer",
       "notes": "No additional notes",
       "tags": [
@@ -1246,16 +1246,16 @@
       "sentiment": 4
     },
     {
-      "name": "Josef Koloncsak",
+      "name": "Alessandro Raponi",
       "status": "Not Hired",
-      "date": "2022-12-02",
+      "date": "2022-11-30",
       "position": "Sales Engineer",
       "region": "EMEA",
       "rating": "TBD",
       "location": "Unknown",
       "linkedin": "",
       "email": "",
-      "phone": "2022-12-02",
+      "phone": "2022-11-30",
       "experience": "Sales Engineer",
       "notes": "No additional notes",
       "tags": [
@@ -1498,6 +1498,27 @@
       "sentiment": 3
     },
     {
+      "name": "Victoria Marcos",
+      "status": "Not Hired",
+      "date": "2023-01-23",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "Reading",
+      "linkedin": "https://www.linkedin.com/in/victoriamarcos/",
+      "email": "",
+      "phone": "2023-01-23",
+      "experience": "Sales Engineer",
+      "notes": "12 years in the UK Married, 3 kids a dog and a house Venesuela Master in computer engineering moved ... | Qualities: very modest before going into the answer\nextremely organized. makes life easy fo...",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
       "name": "Markus Pentzek",
       "status": "Hired",
       "date": "Date not found",
@@ -1519,18 +1540,18 @@
       "sentiment": 3
     },
     {
-      "name": "Victoria Marcos",
+      "name": "Moritz Behrens",
       "status": "Not Hired",
-      "date": "2023-01-23",
+      "date": "2023-01-25",
       "position": "Sales Engineer",
       "region": "EMEA",
       "rating": "TBD",
-      "location": "Reading",
-      "linkedin": "https://www.linkedin.com/in/victoriamarcos/",
+      "location": "Unknown",
+      "linkedin": "",
       "email": "",
-      "phone": "2023-01-23",
+      "phone": "2023-01-25",
       "experience": "Sales Engineer",
-      "notes": "12 years in the UK Married, 3 kids a dog and a house Venesuela Master in computer engineering moved ... | Qualities: very modest before going into the answer\nextremely organized. makes life easy fo...",
+      "notes": "No additional notes",
       "tags": [
         "hiring",
         "candidate",
@@ -1561,16 +1582,16 @@
       "sentiment": 3
     },
     {
-      "name": "Moritz Behrens",
+      "name": "Lars Wilkens",
       "status": "Not Hired",
-      "date": "2023-01-25",
+      "date": "2023-01-27",
       "position": "Sales Engineer",
       "region": "EMEA",
       "rating": "TBD",
       "location": "Unknown",
-      "linkedin": "",
+      "linkedin": "lars-wilkens-0099b5bb/",
       "email": "",
-      "phone": "2023-01-25",
+      "phone": "2023-01-27",
       "experience": "Sales Engineer",
       "notes": "No additional notes",
       "tags": [
@@ -1598,6 +1619,69 @@
         "hiring",
         "candidate",
         "emea",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Yamile Castillo-Preuss",
+      "status": "Not Hired",
+      "date": "2023-02-01",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "Germany",
+      "linkedin": "https://www.linkedin.com/in/yamile-castillo-preuss-314425b4/?originalSubdomain=de",
+      "email": "",
+      "phone": "2023-02-01",
+      "experience": "Sales Engineer",
+      "notes": "crap camera English is okish 18 years in presales More value selling, will bring in technical resour... | Qualities: very committed and pationate\ncan say yes or no\nbuild relationship with customers...",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Fabien Gendre",
+      "status": "Not Hired",
+      "date": "2023-02-01",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "Unknown",
+      "linkedin": "fabien-gendre-a4a2551/",
+      "email": "",
+      "phone": "2023-02-01",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Robert Virgil",
+      "status": "Not Hired",
+      "date": "2023-02-09",
+      "position": "Sales Engineer",
+      "region": "UNKNOWN",
+      "rating": "TBD",
+      "location": "Unknown",
+      "linkedin": "",
+      "email": "",
+      "phone": "2023-02-09",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
+      "tags": [
+        "hiring",
+        "candidate",
+        "unassigned",
         "not-hired"
       ],
       "sentiment": 3
@@ -1645,46 +1729,25 @@
       "sentiment": 3
     },
     {
-      "name": "JC Yeo",
-      "status": "Not Hired",
-      "date": "2023-02-09",
-      "position": "Sales Engineer",
-      "region": "APAC",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "",
-      "email": "",
-      "phone": "2023-02-09",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "apac",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Yamile Castillo-Preuss",
-      "status": "Not Hired",
-      "date": "2023-02-01",
+      "name": "Hicham Kardouna",
+      "status": "Not Hired - Positive",
+      "date": "2023-02-10",
       "position": "Sales Engineer",
       "region": "EMEA",
       "rating": "TBD",
-      "location": "Germany",
-      "linkedin": "https://www.linkedin.com/in/yamile-castillo-preuss-314425b4/?originalSubdomain=de",
+      "location": "Unknown",
+      "linkedin": "hichamkardouna/?originalSubdomain=de",
       "email": "",
-      "phone": "2023-02-01",
+      "phone": "2023-02-10",
       "experience": "Sales Engineer",
-      "notes": "crap camera English is okish 18 years in presales More value selling, will bring in technical resour... | Qualities: very committed and pationate\ncan say yes or no\nbuild relationship with customers...",
+      "notes": "No additional notes",
       "tags": [
         "hiring",
         "candidate",
         "emea",
         "not-hired"
       ],
-      "sentiment": 3
+      "sentiment": 4
     },
     {
       "name": "Marna Marie' Strauss",
@@ -1703,6 +1766,27 @@
         "hiring",
         "candidate",
         "emea",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "JC Yeo",
+      "status": "Not Hired",
+      "date": "2023-02-09",
+      "position": "Sales Engineer",
+      "region": "APAC",
+      "rating": "TBD",
+      "location": "Unknown",
+      "linkedin": "",
+      "email": "",
+      "phone": "2023-02-09",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
+      "tags": [
+        "hiring",
+        "candidate",
+        "apac",
         "not-hired"
       ],
       "sentiment": 3
@@ -1729,22 +1813,22 @@
       "sentiment": 3
     },
     {
-      "name": "Robert Virgil",
+      "name": "Andrew Mumford",
       "status": "Not Hired",
-      "date": "2023-02-09",
+      "date": "2023-02-21",
       "position": "Sales Engineer",
-      "region": "UNKNOWN",
+      "region": "EMEA",
       "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "",
+      "location": "Maidenhead",
+      "linkedin": "https://www.linkedin.com/in/andrewjmumford/?originalSubdomain=uk",
       "email": "",
-      "phone": "2023-02-09",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
+      "phone": "2023-02-21",
+      "experience": "SAP, INFA",
+      "notes": "\"wearing a suit and a tie\" started in product support in data management wanted to move to presales ... | Qualities: technical ability to understand the product and ecosystem\nbusiness acumen\nbecomi...",
       "tags": [
         "hiring",
         "candidate",
-        "unassigned",
+        "emea",
         "not-hired"
       ],
       "sentiment": 3
@@ -1771,27 +1855,6 @@
       "sentiment": 3
     },
     {
-      "name": "Eugen Klass",
-      "status": "Not Hired",
-      "date": "2023-02-23",
-      "position": "Sales Engineer",
-      "region": "UNKNOWN",
-      "rating": "TBD",
-      "location": "bw Frankfurt and Cologne",
-      "linkedin": "https://www.linkedin.com/in/eugen-klass-21816b5a/?jobid=1234",
-      "email": "",
-      "phone": "2023-02-23",
-      "experience": "OpenText, Mulesoft",
-      "notes": "Doing dev from 19 onwards 9 years dev then consulting at OpenText, PS Moved to retail Love technolog... | Qualities: Closed big deals\nBeing able to close into customer needs...",
-      "tags": [
-        "hiring",
-        "candidate",
-        "unassigned",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
       "name": "Jacques Toledano",
       "status": "Not Hired - Positive",
       "date": "2023-02-23",
@@ -1813,6 +1876,27 @@
       "sentiment": 5
     },
     {
+      "name": "Eugen Klass",
+      "status": "Not Hired",
+      "date": "2023-02-23",
+      "position": "Sales Engineer",
+      "region": "UNKNOWN",
+      "rating": "TBD",
+      "location": "bw Frankfurt and Cologne",
+      "linkedin": "https://www.linkedin.com/in/eugen-klass-21816b5a/?jobid=1234",
+      "email": "",
+      "phone": "2023-02-23",
+      "experience": "OpenText, Mulesoft",
+      "notes": "Doing dev from 19 onwards 9 years dev then consulting at OpenText, PS Moved to retail Love technolog... | Qualities: Closed big deals\nBeing able to close into customer needs...",
+      "tags": [
+        "hiring",
+        "candidate",
+        "unassigned",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
       "name": "Manon",
       "status": "Hired",
       "date": "2022-04-21",
@@ -1825,48 +1909,6 @@
       "phone": "2022-04-21",
       "experience": "Sales Engineer",
       "notes": "Come from marketing Moved to data: databases, BI, etc... Move to pre-sales by luck What she likes mo... | Qualities: Improvise, take the challenge and do it live...",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Andrew Mumford",
-      "status": "Not Hired",
-      "date": "2023-02-21",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "Maidenhead",
-      "linkedin": "https://www.linkedin.com/in/andrewjmumford/?originalSubdomain=uk",
-      "email": "",
-      "phone": "2023-02-21",
-      "experience": "SAP, INFA",
-      "notes": "\"wearing a suit and a tie\" started in product support in data management wanted to move to presales ... | Qualities: technical ability to understand the product and ecosystem\nbusiness acumen\nbecomi...",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Jonathan Varley",
-      "status": "Not Hired",
-      "date": "2023-03-07",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "Berdfordshire",
-      "linkedin": "https://www.linkedin.com/in/jonathanvarley/?originalSubdomain=uk",
-      "email": "",
-      "phone": "2023-03-07",
-      "experience": "Splunk, Confluence",
-      "notes": "Focused on large accounts at Splunk His rep went to club 3x Jonathan went once, only a few SE goes M... | Qualities: - champion building\n- willingness to work with people on the customer org\n- curi...",
       "tags": [
         "hiring",
         "candidate",
@@ -1897,6 +1939,48 @@
       "sentiment": 3
     },
     {
+      "name": "Jonathan Varley",
+      "status": "Not Hired",
+      "date": "2023-03-07",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "Berdfordshire",
+      "linkedin": "https://www.linkedin.com/in/jonathanvarley/?originalSubdomain=uk",
+      "email": "",
+      "phone": "2023-03-07",
+      "experience": "Splunk, Confluence",
+      "notes": "Focused on large accounts at Splunk His rep went to club 3x Jonathan went once, only a few SE goes M... | Qualities: - champion building\n- willingness to work with people on the customer org\n- curi...",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "David Wray",
+      "status": "Not Hired",
+      "date": "2023-03-08",
+      "position": "Sales Engineer",
+      "region": "AMERICAS",
+      "rating": "TBD",
+      "location": "Near Woking",
+      "linkedin": "https://www.linkedin.com/in/david-wray-7a59111/",
+      "email": "",
+      "phone": "2023-03-08",
+      "experience": "Sales Engineer",
+      "notes": "Experience in middleware MSMQ (part of Windows) Working for SIs Went contracting for a while Joined ... | Qualities: Working in the middleware and integration domain? Has a diverse background that ...",
+      "tags": [
+        "hiring",
+        "candidate",
+        "americas",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
       "name": "Mark Rennie",
       "status": "Not Hired",
       "date": "2023-03-08",
@@ -1909,27 +1993,6 @@
       "phone": "2023-03-08",
       "experience": "Sales Engineer",
       "notes": "Consulting and engineering Consultant do scoping and initial part, engineering do POCs Is on the eng... | Qualities: Successful most often\nWhen there is an issue it's mostly do to scoping\nKeep it w...",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Lars Wilkens",
-      "status": "Not Hired",
-      "date": "2023-01-27",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "lars-wilkens-0099b5bb/",
-      "email": "",
-      "phone": "2023-01-27",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
       "tags": [
         "hiring",
         "candidate",
@@ -1972,69 +2035,6 @@
       "phone": "2023-03-13",
       "experience": "BMC, BMC",
       "notes": "2 kids, 5 and 7 ServiceNow and BMC doing ITOPS back as a graduate Datacentre automation focus at BMC...",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "David Wray",
-      "status": "Not Hired",
-      "date": "2023-03-08",
-      "position": "Sales Engineer",
-      "region": "AMERICAS",
-      "rating": "TBD",
-      "location": "Near Woking",
-      "linkedin": "https://www.linkedin.com/in/david-wray-7a59111/",
-      "email": "",
-      "phone": "2023-03-08",
-      "experience": "Sales Engineer",
-      "notes": "Experience in middleware MSMQ (part of Windows) Working for SIs Went contracting for a while Joined ... | Qualities: Working in the middleware and integration domain? Has a diverse background that ...",
-      "tags": [
-        "hiring",
-        "candidate",
-        "americas",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Hicham Kardouna",
-      "status": "Not Hired - Positive",
-      "date": "2023-02-10",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "hichamkardouna/?originalSubdomain=de",
-      "email": "",
-      "phone": "2023-02-10",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "not-hired"
-      ],
-      "sentiment": 4
-    },
-    {
-      "name": "Fabien Gendre",
-      "status": "Not Hired",
-      "date": "2023-02-01",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "fabien-gendre-a4a2551/",
-      "email": "",
-      "phone": "2023-02-01",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
       "tags": [
         "hiring",
         "candidate",
@@ -2128,6 +2128,27 @@
       "sentiment": 3
     },
     {
+      "name": "Shivani Gupta",
+      "status": "Not Hired",
+      "date": "2023-04-18",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "Greater London",
+      "linkedin": "https://www.linkedin.com/in/guptashivani/",
+      "email": "shiv1406@hotmail.com",
+      "phone": "2023-04-18",
+      "experience": "Sales Engineer",
+      "notes": "Delhi Grew up in Germany Moved to UK 12 years ago 8 years at last company as a senior technical engi... | Qualities: Like to go above and beyond\nTechnical background\n- personality and soft skills\n-...",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
       "name": "Michael Bach",
       "status": "Not Hired",
       "date": "2023-04-21",
@@ -2161,27 +2182,6 @@
       "phone": "2023-04-24",
       "experience": "Sales Engineer",
       "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Shivani Gupta",
-      "status": "Not Hired",
-      "date": "2023-04-18",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "Greater London",
-      "linkedin": "https://www.linkedin.com/in/guptashivani/",
-      "email": "shiv1406@hotmail.com",
-      "phone": "2023-04-18",
-      "experience": "Sales Engineer",
-      "notes": "Delhi Grew up in Germany Moved to UK 12 years ago 8 years at last company as a senior technical engi... | Qualities: Like to go above and beyond\nTechnical background\n- personality and soft skills\n-...",
       "tags": [
         "hiring",
         "candidate",
@@ -2338,6 +2338,22 @@
       "sentiment": 3
     },
     {
+      "name": "4 - Selling it",
+      "status": "Unknown",
+      "date": "Date not found",
+      "position": "Sales Engineer",
+      "region": "UNKNOWN",
+      "rating": "TBD",
+      "location": "Unknown",
+      "linkedin": "",
+      "email": "",
+      "phone": "",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
+      "tags": [],
+      "sentiment": 3
+    },
+    {
       "name": "Stefan Seitz",
       "status": "Not Hired",
       "date": "2023-06-06",
@@ -2356,22 +2372,6 @@
         "emea",
         "not-hired"
       ],
-      "sentiment": 3
-    },
-    {
-      "name": "4 - Selling it",
-      "status": "Unknown",
-      "date": "Date not found",
-      "position": "Sales Engineer",
-      "region": "UNKNOWN",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "",
-      "email": "",
-      "phone": "",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [],
       "sentiment": 3
     },
     {
@@ -2459,27 +2459,6 @@
       "sentiment": 3
     },
     {
-      "name": "Pascal Bouche",
-      "status": "Hired",
-      "date": "2023-09-27",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "",
-      "email": "",
-      "phone": "2023-09-27",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
       "name": "David Rakusen",
       "status": "Not Hired",
       "date": "2023-09-27",
@@ -2496,6 +2475,27 @@
         "hiring",
         "candidate",
         "unassigned",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Pascal Bouche",
+      "status": "Hired",
+      "date": "2023-09-27",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "Unknown",
+      "linkedin": "",
+      "email": "",
+      "phone": "2023-09-27",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
         "not-hired"
       ],
       "sentiment": 3
@@ -2522,27 +2522,6 @@
       "sentiment": 3
     },
     {
-      "name": "Matthieu Laffaye",
-      "status": "Not Hired",
-      "date": "2024-03-14",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "**Intro notes**",
-      "linkedin": "https://www.linkedin.com/in/matthieulafaye/",
-      "email": "",
-      "phone": "2024-03-14",
-      "experience": "Qlik, SE",
-      "notes": "Connais Benjamin de chez Mapr - Motars Account manager top account HPE - Stelantis, 2-3 autres 47 an...",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
       "name": "Frederic Abitan",
       "status": "Not Hired",
       "date": "2023-12-15",
@@ -2555,6 +2534,27 @@
       "phone": "2023-12-15",
       "experience": "Sales Engineer",
       "notes": "No additional notes",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Matthieu Laffaye",
+      "status": "Not Hired",
+      "date": "2024-03-14",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "**Intro notes**",
+      "linkedin": "https://www.linkedin.com/in/matthieulafaye/",
+      "email": "",
+      "phone": "2024-03-14",
+      "experience": "Qlik, SE",
+      "notes": "Connais Benjamin de chez Mapr - Motars Account manager top account HPE - Stelantis, 2-3 autres 47 an...",
       "tags": [
         "hiring",
         "candidate",
@@ -2774,27 +2774,6 @@
       "sentiment": 3
     },
     {
-      "name": "Essa Moshiri",
-      "status": "Not Hired",
-      "date": "2024-06-13",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "- UK",
-      "linkedin": "**Localisation**",
-      "email": "",
-      "phone": "2024-06-13",
-      "experience": "Sweden",
-      "notes": "- before and after ServiceNow - Moved to the UK 20 years ago from Sweden - Security background - Ser...",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
       "name": "Edward Kandel",
       "status": "Not Hired",
       "date": "Date not found",
@@ -2816,18 +2795,18 @@
       "sentiment": 3
     },
     {
-      "name": "Aleksandra Kulawska",
-      "status": "Hired",
-      "date": "2024-07-10",
+      "name": "Essa Moshiri",
+      "status": "Not Hired",
+      "date": "2024-06-13",
       "position": "Sales Engineer",
       "region": "EMEA",
       "rating": "TBD",
-      "location": "- Manchester",
-      "linkedin": "07759414820",
+      "location": "- UK",
+      "linkedin": "**Localisation**",
       "email": "",
-      "phone": "2024-07-10",
-      "experience": "Sales Engineer",
-      "notes": "started in Academia research, climate model, climate change very cool, very technical went from acad... | Qualities: - extensive tech background, have been the tech person\n\t- sell to head of IT or ...",
+      "phone": "2024-06-13",
+      "experience": "Sweden",
+      "notes": "- before and after ServiceNow - Moved to the UK 20 years ago from Sweden - Security background - Ser...",
       "tags": [
         "hiring",
         "candidate",
@@ -2849,6 +2828,27 @@
       "phone": "2024-06-25",
       "experience": "Sales Engineer",
       "notes": "Qualities: - perseverence...",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Aleksandra Kulawska",
+      "status": "Hired",
+      "date": "2024-07-10",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "- Manchester",
+      "linkedin": "07759414820",
+      "email": "",
+      "phone": "2024-07-10",
+      "experience": "Sales Engineer",
+      "notes": "started in Academia research, climate model, climate change very cool, very technical went from acad... | Qualities: - extensive tech background, have been the tech person\n\t- sell to head of IT or ...",
       "tags": [
         "hiring",
         "candidate",
@@ -2900,27 +2900,6 @@
       "sentiment": 3
     },
     {
-      "name": "Wissam Cheib",
-      "status": "Not Hired",
-      "date": "2024-06-27",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "- London - near greenwitch",
-      "linkedin": "https://www.linkedin.com/in/wissamcheib/",
-      "email": "",
-      "phone": "2024-06-27",
-      "experience": "Icertis",
-      "notes": "- started presales at salesforce in 2010 - salesforce marketing cloud (tool was acquired) - was tech...",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
       "name": "Darragh Callanan",
       "status": "Not Hired",
       "date": "2024-07-02",
@@ -2933,6 +2912,27 @@
       "phone": "2024-07-02",
       "experience": "Sales Engineer",
       "notes": "- solve complex problems for customers - end at Okta? - layoff and restructuring - kept the top 20% ...",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Wissam Cheib",
+      "status": "Not Hired",
+      "date": "2024-06-27",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "- London - near greenwitch",
+      "linkedin": "https://www.linkedin.com/in/wissamcheib/",
+      "email": "",
+      "phone": "2024-06-27",
+      "experience": "Icertis",
+      "notes": "- started presales at salesforce in 2010 - salesforce marketing cloud (tool was acquired) - was tech...",
       "tags": [
         "hiring",
         "candidate",
@@ -3068,6 +3068,69 @@
       "sentiment": 3
     },
     {
+      "name": "Jonathan Pitts",
+      "status": "Not Hired",
+      "date": "2024-09-27",
+      "position": "Sales Engineer",
+      "region": "UNKNOWN",
+      "rating": "TBD",
+      "location": "Unknown",
+      "linkedin": "",
+      "email": "",
+      "phone": "2024-09-27",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
+      "tags": [
+        "hiring",
+        "candidate",
+        "unassigned",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Luiz Kemmer",
+      "status": "Not Hired",
+      "date": "2024-10-22",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "Unknown",
+      "linkedin": "",
+      "email": "",
+      "phone": "2024-10-22",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Ralf Klink",
+      "status": "Not Hired",
+      "date": "2024-10-08",
+      "position": "Sales Engineer",
+      "region": "UNKNOWN",
+      "rating": "TBD",
+      "location": "Unknown",
+      "linkedin": "",
+      "email": "",
+      "phone": "2024-10-08",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
+      "tags": [
+        "hiring",
+        "candidate",
+        "unassigned",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
       "name": "Thibault Veerasamy",
       "status": "Not Hired",
       "date": "2024-10-17",
@@ -3110,90 +3173,6 @@
       "sentiment": 3
     },
     {
-      "name": "Jonathan Pitts",
-      "status": "Not Hired",
-      "date": "2024-09-27",
-      "position": "Sales Engineer",
-      "region": "UNKNOWN",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "",
-      "email": "",
-      "phone": "2024-09-27",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "unassigned",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Ralf Klink",
-      "status": "Not Hired",
-      "date": "2024-10-08",
-      "position": "Sales Engineer",
-      "region": "UNKNOWN",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "",
-      "email": "",
-      "phone": "2024-10-08",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "unassigned",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Christoph Gerlach",
-      "status": "Not Hired",
-      "date": "2024-11-18",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "",
-      "email": "",
-      "phone": "2024-11-18",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Mitch",
-      "status": "Hired",
-      "date": "Date not found",
-      "position": "Sales Engineer",
-      "region": "UNKNOWN",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "",
-      "email": "",
-      "phone": "",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "unassigned",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
       "name": "Darren Koch",
       "status": "Hired",
       "date": "2024-10-25",
@@ -3215,16 +3194,16 @@
       "sentiment": 3
     },
     {
-      "name": "Anthony Seguillon",
+      "name": "James Martin",
       "status": "Not Hired",
-      "date": "2024-10-29",
+      "date": "2024-10-28",
       "position": "Sales Engineer",
       "region": "UNKNOWN",
       "rating": "TBD",
       "location": "Unknown",
       "linkedin": "",
       "email": "",
-      "phone": "2024-10-29",
+      "phone": "2024-10-28",
       "experience": "Sales Engineer",
       "notes": "No additional notes",
       "tags": [
@@ -3236,16 +3215,16 @@
       "sentiment": 3
     },
     {
-      "name": "Sal Gauri",
-      "status": "Not Hired",
-      "date": "2024-11-19",
+      "name": "Nicolas Chahoud",
+      "status": "Hired",
+      "date": "2024-10-30",
       "position": "Sales Engineer",
       "region": "EMEA",
       "rating": "TBD",
       "location": "Unknown",
       "linkedin": "",
       "email": "",
-      "phone": "2024-11-19",
+      "phone": "2024-10-30",
       "experience": "Sales Engineer",
       "notes": "No additional notes",
       "tags": [
@@ -3257,16 +3236,16 @@
       "sentiment": 3
     },
     {
-      "name": "Junior Hewitt",
+      "name": "Anthony Seguillon",
       "status": "Not Hired",
-      "date": "2024-11-27",
+      "date": "2024-10-29",
       "position": "Sales Engineer",
       "region": "UNKNOWN",
       "rating": "TBD",
       "location": "Unknown",
       "linkedin": "",
       "email": "",
-      "phone": "2024-11-27",
+      "phone": "2024-10-29",
       "experience": "Sales Engineer",
       "notes": "No additional notes",
       "tags": [
@@ -3299,6 +3278,48 @@
       "sentiment": 3
     },
     {
+      "name": "Mitch",
+      "status": "Hired",
+      "date": "Date not found",
+      "position": "Sales Engineer",
+      "region": "UNKNOWN",
+      "rating": "TBD",
+      "location": "Unknown",
+      "linkedin": "",
+      "email": "",
+      "phone": "",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
+      "tags": [
+        "hiring",
+        "candidate",
+        "unassigned",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Christoph Gerlach",
+      "status": "Not Hired",
+      "date": "2024-11-18",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "Unknown",
+      "linkedin": "",
+      "email": "",
+      "phone": "2024-11-18",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
       "name": "Saurabh Wadhwa",
       "status": "Not Hired",
       "date": "2024-11-18",
@@ -3309,6 +3330,48 @@
       "linkedin": "s-wadhwa/?originalSubdomain=uk",
       "email": "",
       "phone": "2024-11-18",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Maria Hercules",
+      "status": "Hired",
+      "date": "2024-11-19",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "Unknown",
+      "linkedin": "",
+      "email": "",
+      "phone": "2024-11-19",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Sal Gauri",
+      "status": "Not Hired",
+      "date": "2024-11-19",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "Unknown",
+      "linkedin": "",
+      "email": "",
+      "phone": "2024-11-19",
       "experience": "Sales Engineer",
       "notes": "No additional notes",
       "tags": [
@@ -3362,23 +3425,23 @@
       "sentiment": 3
     },
     {
-      "name": "Angelica Tacca Dughetti",
-      "status": "Hired",
-      "date": "2025-01-21",
+      "name": "Junior Hewitt",
+      "status": "Not Hired",
+      "date": "2024-11-27",
       "position": "Sales Engineer",
-      "region": "EMEA",
+      "region": "UNKNOWN",
       "rating": "TBD",
-      "location": "Madrid",
-      "linkedin": "https://www.linkedin.com/in/angelica-tacca-dughetti/?originalSubdomain=es",
+      "location": "Unknown",
+      "linkedin": "",
       "email": "",
-      "phone": "2025-01-21",
-      "experience": "Confluence, SRE",
-      "notes": "- Italian - speaks fast! - 8 years in Spain - DevOps, System Engineering, Telecom eduction - Solutio... | Qualities: - good relationship with customers, on a personal level\n- super organized (notes...",
+      "phone": "2024-11-27",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
       "tags": [
         "hiring",
         "candidate",
-        "emea",
-        "recent-interview---pending"
+        "unassigned",
+        "not-hired"
       ],
       "sentiment": 3
     },
@@ -3404,69 +3467,6 @@
       "sentiment": 3
     },
     {
-      "name": "Dinesh",
-      "status": "Not Hired",
-      "date": "2025-02-06",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "",
-      "email": "",
-      "phone": "2025-02-06",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "recent-interview---pending"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Lukas Baerschneider",
-      "status": "Not Hired",
-      "date": "2025-01-09",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "",
-      "email": "",
-      "phone": "2025-01-09",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "recent-interview---pending"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Anass Bezzari",
-      "status": "Not Hired",
-      "date": "2025-02-13",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "",
-      "email": "",
-      "phone": "2025-02-13",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "recent-interview---pending"
-      ],
-      "sentiment": 3
-    },
-    {
       "name": "Alvaro Palacios Morales",
       "status": "Not Hired",
       "date": "2024-11-28",
@@ -3484,132 +3484,6 @@
         "candidate",
         "emea",
         "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Kristin Hadding",
-      "status": "Not Hired",
-      "date": "2025-03-28",
-      "position": "Sales Engineer",
-      "region": "UNKNOWN",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "",
-      "email": "",
-      "phone": "2025-03-28",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "unassigned",
-        "recent-interview---pending"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Dario Bezzina",
-      "status": "Not Hired",
-      "date": "2025-01-27",
-      "position": "Sales Engineer",
-      "region": "EMEA (Sweden)",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "",
-      "email": "",
-      "phone": "2025-01-27",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "recent-interview"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Michael Clement",
-      "status": "Not Hired",
-      "date": "2025-04-02",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "",
-      "email": "",
-      "phone": "2025-04-02",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "recent-interview---pending"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Razzia Gafur",
-      "status": "Not Hired",
-      "date": "2025-06-30",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "- Newcastle Upon Tyne",
-      "linkedin": "https://www.linkedin.com/in/razziagafur/",
-      "email": "",
-      "phone": "2025-06-30",
-      "experience": "Alteryx",
-      "notes": "- started with Alteryx - Thoughtspot - Contiuum - doing more: reaching out, demo, POC, onboarding, t...",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "recent-interview---pending"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Maria Hercules",
-      "status": "Hired",
-      "date": "2024-11-19",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "",
-      "email": "",
-      "phone": "2024-11-19",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Freja Albinsdotter",
-      "status": "Not Hired",
-      "date": "2025-07-01",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "",
-      "email": "",
-      "phone": "2025-07-01",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "recent-interview---pending"
       ],
       "sentiment": 3
     },
@@ -3635,37 +3509,37 @@
       "sentiment": 3
     },
     {
-      "name": "Jennifer Vial",
-      "status": "Hiring Manager",
-      "date": "2025-06-26",
+      "name": "Davide Pelosi",
+      "status": "Not Hired",
+      "date": "2024-12-09",
       "position": "Sales Engineer",
       "region": "EMEA",
       "rating": "TBD",
-      "location": "- France",
-      "linkedin": "- https://www.linkedin.com/in/jennifer-vial-74a306b2/",
-      "email": "",
-      "phone": "2025-06-26",
+      "location": "**Intro notes**",
+      "linkedin": "https://www.linkedin.com/in/davide-pelosi/?originalSubdomain=it",
+      "email": "davide.pelosi@gmail.com",
+      "phone": "2024-12-09",
       "experience": "Sales Engineer",
-      "notes": "- 8 months at snowflake - studied in business - extended into a data science master - learned to cod...",
+      "notes": "- Analytics, Data governance, Integration - starting AI now - [...] - Managing Italy and Iberia - sm...",
       "tags": [
         "hiring",
         "candidate",
         "emea",
-        "recent-interview---pending"
+        "not-hired"
       ],
-      "sentiment": 4
+      "sentiment": 3
     },
     {
-      "name": "Luiz Kemmer",
+      "name": "Oliver Schreyer",
       "status": "Not Hired",
-      "date": "2024-10-22",
+      "date": "2024-12-17",
       "position": "Sales Engineer",
       "region": "EMEA",
       "rating": "TBD",
       "location": "Unknown",
       "linkedin": "",
       "email": "",
-      "phone": "2024-10-22",
+      "phone": "2024-12-17",
       "experience": "Sales Engineer",
       "notes": "No additional notes",
       "tags": [
@@ -3677,16 +3551,100 @@
       "sentiment": 3
     },
     {
-      "name": "Matthew Vladimery",
-      "status": "Recent Interview - Pending",
-      "date": "2025-06-25",
+      "name": "Thomas Soriano",
+      "status": "Not Hired - Positive",
+      "date": "2025-01-21",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "Barcelone",
+      "linkedin": "https://www.linkedin.com/in/thomas-soriano-32262415/",
+      "email": "",
+      "phone": "2025-01-21",
+      "experience": "Sales Engineer",
+      "notes": "- web marketing - traffic manager - besoin de coder - formation pro web designer - sold websites - C...",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "recent-interview---pending"
+      ],
+      "sentiment": 4
+    },
+    {
+      "name": "Chiara",
+      "status": "Hired",
+      "date": "Date not found",
       "position": "Sales Engineer",
       "region": "EMEA",
       "rating": "TBD",
       "location": "Unknown",
       "linkedin": "",
       "email": "",
-      "phone": "2025-06-25",
+      "phone": "",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Thierry Fosso Kenne",
+      "status": "Not Hired",
+      "date": "2024-12-20",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "**Intro notes**",
+      "linkedin": "**Localisation**",
+      "email": "",
+      "phone": "2024-12-20",
+      "experience": "Sales Engineer",
+      "notes": "- short summary of his experience - meetups? - pre-covid - some ML experience during his master - | Qualities: - tech experience\n- developing the sales acumen...",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "not-hired"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Angelica Tacca Dughetti",
+      "status": "Hired",
+      "date": "2025-01-21",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "Madrid",
+      "linkedin": "https://www.linkedin.com/in/angelica-tacca-dughetti/?originalSubdomain=es",
+      "email": "",
+      "phone": "2025-01-21",
+      "experience": "Confluence, SRE",
+      "notes": "- Italian - speaks fast! - 8 years in Spain - DevOps, System Engineering, Telecom eduction - Solutio... | Qualities: - good relationship with customers, on a personal level\n- super organized (notes...",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "recent-interview---pending"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Lukas Baerschneider",
+      "status": "Not Hired",
+      "date": "2025-01-09",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "Unknown",
+      "linkedin": "",
+      "email": "",
+      "phone": "2025-01-09",
       "experience": "Sales Engineer",
       "notes": "No additional notes",
       "tags": [
@@ -3719,65 +3677,23 @@
       "sentiment": 3
     },
     {
-      "name": "John Thornton",
-      "status": "Not Hired - Negative",
-      "date": "2025-07-02",
+      "name": "Dario Bezzina",
+      "status": "Not Hired",
+      "date": "2025-01-27",
       "position": "Sales Engineer",
-      "region": "UNKNOWN",
+      "region": "EMEA (Sweden)",
       "rating": "TBD",
       "location": "Unknown",
       "linkedin": "",
       "email": "",
-      "phone": "2025-07-02",
+      "phone": "2025-01-27",
       "experience": "Sales Engineer",
       "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "unassigned",
-        "recent-interview---pending"
-      ],
-      "sentiment": 1
-    },
-    {
-      "name": "James Martin",
-      "status": "Not Hired",
-      "date": "2024-10-28",
-      "position": "Sales Engineer",
-      "region": "UNKNOWN",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "",
-      "email": "",
-      "phone": "2024-10-28",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "unassigned",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Davide Pelosi",
-      "status": "Not Hired",
-      "date": "2024-12-09",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "**Intro notes**",
-      "linkedin": "https://www.linkedin.com/in/davide-pelosi/?originalSubdomain=it",
-      "email": "davide.pelosi@gmail.com",
-      "phone": "2024-12-09",
-      "experience": "Sales Engineer",
-      "notes": "- Analytics, Data governance, Integration - starting AI now - [...] - Managing Italy and Iberia - sm...",
       "tags": [
         "hiring",
         "candidate",
         "emea",
-        "not-hired"
+        "recent-interview"
       ],
       "sentiment": 3
     },
@@ -3803,23 +3719,86 @@
       "sentiment": 3
     },
     {
-      "name": "Oliver Schreyer",
+      "name": "Dinesh",
       "status": "Not Hired",
-      "date": "2024-12-17",
+      "date": "2025-02-06",
       "position": "Sales Engineer",
       "region": "EMEA",
       "rating": "TBD",
       "location": "Unknown",
       "linkedin": "",
       "email": "",
-      "phone": "2024-12-17",
+      "phone": "2025-02-06",
       "experience": "Sales Engineer",
       "notes": "No additional notes",
       "tags": [
         "hiring",
         "candidate",
         "emea",
-        "not-hired"
+        "recent-interview---pending"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Anass Bezzari",
+      "status": "Not Hired",
+      "date": "2025-02-13",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "Unknown",
+      "linkedin": "",
+      "email": "",
+      "phone": "2025-02-13",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "recent-interview---pending"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Kristin Hadding",
+      "status": "Not Hired",
+      "date": "2025-03-28",
+      "position": "Sales Engineer",
+      "region": "UNKNOWN",
+      "rating": "TBD",
+      "location": "Unknown",
+      "linkedin": "",
+      "email": "",
+      "phone": "2025-03-28",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
+      "tags": [
+        "hiring",
+        "candidate",
+        "unassigned",
+        "recent-interview---pending"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Michael Clement",
+      "status": "Not Hired",
+      "date": "2025-04-02",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "Unknown",
+      "linkedin": "",
+      "email": "",
+      "phone": "2025-04-02",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "recent-interview---pending"
       ],
       "sentiment": 3
     },
@@ -3845,29 +3824,92 @@
       "sentiment": 4
     },
     {
-      "name": "Thierry Fosso Kenne",
+      "name": "Razzia Gafur",
       "status": "Not Hired",
-      "date": "2024-12-20",
+      "date": "2025-06-30",
       "position": "Sales Engineer",
       "region": "EMEA",
       "rating": "TBD",
-      "location": "**Intro notes**",
-      "linkedin": "**Localisation**",
+      "location": "- Newcastle Upon Tyne",
+      "linkedin": "https://www.linkedin.com/in/razziagafur/",
       "email": "",
-      "phone": "2024-12-20",
-      "experience": "Sales Engineer",
-      "notes": "- short summary of his experience - meetups? - pre-covid - some ML experience during his master - | Qualities: - tech experience\n- developing the sales acumen...",
+      "phone": "2025-06-30",
+      "experience": "Alteryx",
+      "notes": "- started with Alteryx - Thoughtspot - Contiuum - doing more: reaching out, demo, POC, onboarding, t...",
       "tags": [
         "hiring",
         "candidate",
         "emea",
-        "not-hired"
+        "recent-interview---pending"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Matthew Vladimery",
+      "status": "Recent Interview - Pending",
+      "date": "2025-06-25",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "Unknown",
+      "linkedin": "",
+      "email": "",
+      "phone": "2025-06-25",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "recent-interview---pending"
+      ],
+      "sentiment": 3
+    },
+    {
+      "name": "Jennifer Vial",
+      "status": "Hiring Manager",
+      "date": "2025-06-26",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "- France",
+      "linkedin": "- https://www.linkedin.com/in/jennifer-vial-74a306b2/",
+      "email": "",
+      "phone": "2025-06-26",
+      "experience": "Sales Engineer",
+      "notes": "- 8 months at snowflake - studied in business - extended into a data science master - learned to cod...",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "recent-interview---pending"
+      ],
+      "sentiment": 4
+    },
+    {
+      "name": "Freja Albinsdotter",
+      "status": "Not Hired",
+      "date": "2025-07-01",
+      "position": "Sales Engineer",
+      "region": "EMEA",
+      "rating": "TBD",
+      "location": "Unknown",
+      "linkedin": "",
+      "email": "",
+      "phone": "2025-07-01",
+      "experience": "Sales Engineer",
+      "notes": "No additional notes",
+      "tags": [
+        "hiring",
+        "candidate",
+        "emea",
+        "recent-interview---pending"
       ],
       "sentiment": 3
     },
     {
       "name": "Jonathan Baggott",
-      "status": "Offer Stage",
+      "status": "Regional VP",
       "date": "2025-07-01",
       "position": "Sales Engineer",
       "region": "EMEA",
@@ -3884,28 +3926,7 @@
         "emea",
         "recent-interview---pending"
       ],
-      "sentiment": 3
-    },
-    {
-      "name": "Chiara",
-      "status": "Hired",
-      "date": "Date not found",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "Unknown",
-      "linkedin": "",
-      "email": "",
-      "phone": "",
-      "experience": "Sales Engineer",
-      "notes": "No additional notes",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
-        "not-hired"
-      ],
-      "sentiment": 3
+      "sentiment": 4
     },
     {
       "name": "Parris Barron",
@@ -3929,46 +3950,25 @@
       "sentiment": 3
     },
     {
-      "name": "Nicolas Chahoud",
-      "status": "Hired",
-      "date": "2024-10-30",
+      "name": "John Thornton",
+      "status": "Not Hired - Negative",
+      "date": "2025-07-02",
       "position": "Sales Engineer",
-      "region": "EMEA",
+      "region": "UNKNOWN",
       "rating": "TBD",
       "location": "Unknown",
       "linkedin": "",
       "email": "",
-      "phone": "2024-10-30",
+      "phone": "2025-07-02",
       "experience": "Sales Engineer",
       "notes": "No additional notes",
       "tags": [
         "hiring",
         "candidate",
-        "emea",
-        "not-hired"
-      ],
-      "sentiment": 3
-    },
-    {
-      "name": "Thomas Soriano",
-      "status": "Not Hired - Positive",
-      "date": "2025-01-21",
-      "position": "Sales Engineer",
-      "region": "EMEA",
-      "rating": "TBD",
-      "location": "Barcelone",
-      "linkedin": "https://www.linkedin.com/in/thomas-soriano-32262415/",
-      "email": "",
-      "phone": "2025-01-21",
-      "experience": "Sales Engineer",
-      "notes": "- web marketing - traffic manager - besoin de coder - formation pro web designer - sold websites - C...",
-      "tags": [
-        "hiring",
-        "candidate",
-        "emea",
+        "unassigned",
         "recent-interview---pending"
       ],
-      "sentiment": 4
+      "sentiment": 1
     },
     {
       "name": "Nadim Kanaan",
@@ -4016,13 +4016,13 @@
     "recent_interviews": 2,
     "pending_decisions": 2,
     "hired": 32,
-    "offer_stage": 1,
+    "offer_stage": 0,
     "not_hired_negative": 6,
     "not_hired_previous": 0,
-    "generation_date": "2025-07-11T17:30:28.516Z"
+    "generation_date": "2025-07-11T17:37:26.293Z"
   },
   "metadata": {
-    "generated_at": "2025-07-11T17:30:28.516Z",
+    "generated_at": "2025-07-11T17:37:26.293Z",
     "total_files_processed": 192,
     "source_directory": "File System Access API"
   }

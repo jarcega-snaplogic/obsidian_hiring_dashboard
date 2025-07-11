@@ -71,8 +71,9 @@
             border-bottom: 1px solid #eee;
             display: flex;
             gap: 20px;
-            align-items: center;
+            align-items: flex-start;
             flex-wrap: wrap;
+            min-height: 120px; /* Ensure consistent height */
         }
 
         .search-box {
@@ -108,6 +109,8 @@
             display: flex;
             gap: 10px;
             align-items: center;
+            min-height: 40px; /* Ensure consistent height */
+            flex-wrap: wrap;
         }
 
         .filter-select {
@@ -516,6 +519,72 @@
             text-align: center;
         }
 
+        .score-filter-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .score-filter-header {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 120px;
+            font-size: 14px;
+        }
+
+        .score-filter-header:hover {
+            border-color: #3498db;
+        }
+
+        .dropdown-arrow {
+            font-size: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .score-filter-header.active .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .score-filter-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: none;
+            margin-top: 4px;
+        }
+
+        .score-filter-dropdown.active {
+            display: block;
+        }
+
+        .score-option {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 14px;
+            gap: 8px;
+        }
+
+        .score-option:hover {
+            background: #f8f9fa;
+        }
+
+        .score-option input[type="checkbox"] {
+            margin: 0;
+        }
+
         .sentiment-display {
             display: inline-flex;
             align-items: center;
@@ -665,13 +734,29 @@
                     <option value="Not Hired - Previous Cycle">Previous Cycle</option>
                 </select>
                 
-                <select class="filter-select" id="scoreFilter" multiple>
-                    <option value="1">Score 1</option>
-                    <option value="2">Score 2</option>
-                    <option value="3">Score 3</option>
-                    <option value="4">Score 4</option>
-                    <option value="5">Score 5</option>
-                </select>
+                <div class="score-filter-container">
+                    <div class="score-filter-header" onclick="toggleScoreFilter()">
+                        <span id="scoreFilterLabel">All Scores</span>
+                        <span class="dropdown-arrow">▼</span>
+                    </div>
+                    <div class="score-filter-dropdown" id="scoreFilterDropdown">
+                        <label class="score-option">
+                            <input type="checkbox" value="1" onchange="updateScoreFilter()"> Score 1
+                        </label>
+                        <label class="score-option">
+                            <input type="checkbox" value="2" onchange="updateScoreFilter()"> Score 2
+                        </label>
+                        <label class="score-option">
+                            <input type="checkbox" value="3" onchange="updateScoreFilter()"> Score 3
+                        </label>
+                        <label class="score-option">
+                            <input type="checkbox" value="4" onchange="updateScoreFilter()"> Score 4
+                        </label>
+                        <label class="score-option">
+                            <input type="checkbox" value="5" onchange="updateScoreFilter()"> Score 5
+                        </label>
+                    </div>
+                </div>
             </div>
 
 
@@ -835,8 +920,8 @@
         let displayMode = 'cards'; // 'cards' or 'list'
         const viewOrder = ['currentHiring', 'pastHiring'];
         const viewLabels = {
-            'currentHiring': '🔥 Current Hiring',
-            'pastHiring': '📋 Past Hiring'
+            'currentHiring': '📋 Past Hiring',
+            'pastHiring': '🔥 Current Hiring'
         };
 
         // No embedded data - everything loads from connected folder
@@ -1842,7 +1927,6 @@
             document.getElementById('regionFilter').addEventListener('change', handleFilter);
             document.getElementById('positionFilter').addEventListener('change', handleFilter);
             document.getElementById('statusFilter').addEventListener('change', handleFilter);
-            document.getElementById('scoreFilter').addEventListener('change', handleFilter);
         }
 
         // Handle search
@@ -1861,7 +1945,7 @@
             const regionFilter = document.getElementById('regionFilter').value;
             const positionFilter = document.getElementById('positionFilter').value;
             const statusFilter = document.getElementById('statusFilter').value;
-            const scoreFilter = Array.from(document.getElementById('scoreFilter').selectedOptions).map(option => option.value);
+            const scoreFilter = getSelectedScores();
 
             filteredCandidates = allCandidates.filter(candidate => {
                 const matchesSearch = !searchTerm || 
@@ -1881,6 +1965,44 @@
 
             renderCurrentView();
         }
+
+        // Score filter functions
+        function toggleScoreFilter() {
+            const dropdown = document.getElementById('scoreFilterDropdown');
+            const header = document.querySelector('.score-filter-header');
+            
+            dropdown.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        function updateScoreFilter() {
+            const selectedScores = getSelectedScores();
+            const label = document.getElementById('scoreFilterLabel');
+            
+            if (selectedScores.length === 0) {
+                label.textContent = 'All Scores';
+            } else if (selectedScores.length === 1) {
+                label.textContent = `Score ${selectedScores[0]}`;
+            } else {
+                label.textContent = `${selectedScores.length} Scores`;
+            }
+            
+            applyFilters();
+        }
+
+        function getSelectedScores() {
+            return Array.from(document.querySelectorAll('.score-option input[type="checkbox"]:checked'))
+                .map(checkbox => checkbox.value);
+        }
+
+        // Close score filter when clicking outside
+        document.addEventListener('click', function(event) {
+            const container = document.querySelector('.score-filter-container');
+            if (!container.contains(event.target)) {
+                document.getElementById('scoreFilterDropdown').classList.remove('active');
+                document.querySelector('.score-filter-header').classList.remove('active');
+            }
+        });
 
         // Quick filters
         function showQuickFilter(filterType) {
@@ -1925,9 +2047,9 @@
         function toggleDisplayMode() {
             displayMode = displayMode === 'cards' ? 'list' : 'cards';
             
-            // Update button label
+            // Update button label to show what it will do, not current state
             const toggleBtn = document.getElementById('toggleDisplayBtn');
-            toggleBtn.textContent = displayMode === 'cards' ? '📋 Card View' : '📋 List View';
+            toggleBtn.textContent = displayMode === 'cards' ? '📋 List View' : '📋 Card View';
             
             renderCurrentView();
         }
@@ -2610,7 +2732,7 @@
     
     <!-- Version indicator -->
     <div style="position: fixed; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px; font-size: 12px; z-index: 1000;">
-        v2.2.0 - 2024-01-11
+        v2.3.0 - 2024-01-11
     </div>
 </body>
 </html>
